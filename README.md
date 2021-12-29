@@ -1,0 +1,2 @@
+# degula
+Karnataka tempels information
