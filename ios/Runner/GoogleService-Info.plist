@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>212031999765-qq61bkfscsrbuq41dm7tqc0q8edg7pkn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.212031999765-qq61bkfscsrbuq41dm7tqc0q8edg7pkn</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>212031999765-rdausuhgdr8r45nnvco5a5r38psjskdn.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC0coYv8s5rDphPgeW1aphNCVrIHEOaxJ8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>212031999765</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.harimogalli.degula</string>
+	<key>PROJECT_ID</key>
+	<string>degula</string>
+	<key>STORAGE_BUCKET</key>
+	<string>degula.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:212031999765:ios:d917ee58e9af642402231c</string>
+</dict>
+</plist>

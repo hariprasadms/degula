@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "212031999765",
+    "project_id": "degula",
+    "storage_bucket": "degula.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212031999765:android:edde23c54c01525702231c",
+        "android_client_info": {
+          "package_name": "com.harimogalli.degula"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212031999765-rdausuhgdr8r45nnvco5a5r38psjskdn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.harimogalli.degula",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "212031999765-g5knihbac84v2ci457s5cor1079li98k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4UGR6u86w-tgtK-Z2_N5YlRYhHRwabmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212031999765-g5knihbac84v2ci457s5cor1079li98k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "212031999765-qq61bkfscsrbuq41dm7tqc0q8edg7pkn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.harimogalli.degula"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

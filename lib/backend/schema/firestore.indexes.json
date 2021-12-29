@@ -1,0 +1,18 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "temples",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "favBy",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "publishe",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}
