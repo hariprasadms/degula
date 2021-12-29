@@ -1,4 +1,5 @@
 import '../backend/backend.dart';
+import '../city_search_page/city_search_page_widget.dart';
 import '../citytemples/citytemples_widget.dart';
 import '../components/no_temples_yet_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
@@ -55,10 +56,20 @@ class _CitylistWidgetState extends State<CitylistWidget>
         actions: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-            child: Icon(
-              Icons.search,
-              color: FlutterFlowTheme.tertiaryColor,
-              size: 24,
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CitySearchPageWidget(),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.search,
+                color: FlutterFlowTheme.tertiaryColor,
+                size: 24,
+              ),
             ),
           ),
         ],
