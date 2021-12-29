@@ -1,2 +1,2 @@
-# degula
+# Degula
 Karnataka tempels information
