@@ -31,6 +31,10 @@ abstract class AboutRecord implements Built<AboutRecord, AboutRecordBuilder> {
       .snapshots()
       .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
+  static Future<AboutRecord> getDocumentOnce(DocumentReference ref) => ref
+      .get()
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+
   AboutRecord._();
   factory AboutRecord([void Function(AboutRecordBuilder) updates]) =
       _$AboutRecord;

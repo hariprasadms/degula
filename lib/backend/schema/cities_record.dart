@@ -39,6 +39,10 @@ abstract class CitiesRecord
       .snapshots()
       .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
+  static Future<CitiesRecord> getDocumentOnce(DocumentReference ref) => ref
+      .get()
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+
   CitiesRecord._();
   factory CitiesRecord([void Function(CitiesRecordBuilder) updates]) =
       _$CitiesRecord;

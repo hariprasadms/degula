@@ -38,6 +38,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 
+
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs your location access to  show temples distance from your current location .</string>
 

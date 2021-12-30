@@ -70,6 +70,10 @@ abstract class TemplesRecord
       .snapshots()
       .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
+  static Future<TemplesRecord> getDocumentOnce(DocumentReference ref) => ref
+      .get()
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+
   TemplesRecord._();
   factory TemplesRecord([void Function(TemplesRecordBuilder) updates]) =
       _$TemplesRecord;

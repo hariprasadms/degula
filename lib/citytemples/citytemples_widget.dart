@@ -41,16 +41,7 @@ class _CitytemplesWidgetState extends State<CitytemplesWidget> {
             fontSize: 16,
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-            child: Icon(
-              Icons.search,
-              color: FlutterFlowTheme.tertiaryColor,
-              size: 24,
-            ),
-          ),
-        ],
+        actions: [],
         centerTitle: true,
         elevation: 4,
       ),
