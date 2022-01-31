@@ -29,8 +29,11 @@ class _NoTemplesYetWidgetState extends State<NoTemplesYetWidget> {
         Align(
           alignment: AlignmentDirectional(0, 0),
           child: Text(
-            'No records to display',
-            style: FlutterFlowTheme.bodyText1,
+            'No temples to display',
+            style: FlutterFlowTheme.bodyText1.override(
+              fontFamily: 'Poppins',
+              fontSize: 16,
+            ),
           ),
         ),
       ],

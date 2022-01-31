@@ -1,10 +1,11 @@
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../volunteer_login/volunteer_login_widget.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:share_plus/share_plus.dart';
 
 class AboutTempleWidget extends StatefulWidget {
   const AboutTempleWidget({Key key}) : super(key: key);
@@ -24,11 +25,12 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
         backgroundColor: FlutterFlowTheme.primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
-          'ಗಂಧದಗುಡಿ',
+          'ದೇಗುಲ',
           style: FlutterFlowTheme.bodyText1.override(
             fontFamily: 'Poppins',
             color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 18,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
           ),
         ),
         actions: [],
@@ -63,68 +65,98 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
               final columnAboutRecord = columnAboutRecordList.isNotEmpty
                   ? columnAboutRecordList.first
                   : null;
-              return InkWell(
-                onTap: () async {
-                  await Share.share('');
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional(0, -1),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                        child: Text(
-                          columnAboutRecord.aboutTemple,
-                          style: FlutterFlowTheme.bodyText1,
-                        ),
+              return Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional(0, -1),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      child: Text(
+                        columnAboutRecord.aboutTemple,
+                        style: FlutterFlowTheme.bodyText1,
                       ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 3,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.primaryColor,
-                              ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                          child: Container(
+                            width: double.infinity,
+                            height: 3,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.primaryColor,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await Share.share('');
-                      },
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.share,
-                        ),
-                        title: Text(
-                          'App ಲಿಂಕನ್ನು ಸ್ನೇಹಿಥರಿಗೆ ಶೇರ್ ಮಾಡಿ ',
-                          style: FlutterFlowTheme.title3.override(
-                            fontFamily: 'Poppins',
-                            color: Color(0xFF727070),
-                            fontSize: 16,
-                          ),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Color(0xFF303030),
-                          size: 20,
-                        ),
-                        tileColor: Color(0xFFF5F5F5),
-                        dense: false,
                       ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await actions.shareAppStoreLink(
+                        'https://play.google.com/store/apps/details?id=com.harimogalli.degula',
+                        '1606408373',
+                      );
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.share,
+                      ),
+                      title: Text(
+                        'App ಲಿಂಕನ್ನು ಸ್ನೇಹಿಥರಿಗೆ ಶೇರ್ ಮಾಡಿ ',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: Color(0xFF727070),
+                          fontSize: 15,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFF303030),
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
                     ),
-                  ],
-                ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 0),
+                          reverseDuration: Duration(milliseconds: 0),
+                          child: VolunteerLoginWidget(),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.people_alt_outlined,
+                      ),
+                      title: Text(
+                        'Submit a volunteer request.',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: Color(0xFF727070),
+                          fontSize: 16,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFF303030),
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
+                    ),
+                  ),
+                ],
               );
             },
           ),

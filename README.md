@@ -1,4 +1,4 @@
-# degula
+# Degula
 
 A new Flutter project.
 

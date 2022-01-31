@@ -1,10 +1,12 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/no_temples_yet_widget.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../templedetails/templedetails_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +18,32 @@ class FavouriteTempelsWidget extends StatefulWidget {
   _FavouriteTempelsWidgetState createState() => _FavouriteTempelsWidgetState();
 }
 
-class _FavouriteTempelsWidgetState extends State<FavouriteTempelsWidget> {
+class _FavouriteTempelsWidgetState extends State<FavouriteTempelsWidget>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'listViewOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      fadeIn: true,
+      initialState: AnimationState(
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        opacity: 1,
+      ),
+    ),
+  };
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +126,8 @@ class _FavouriteTempelsWidgetState extends State<FavouriteTempelsWidget> {
                                   alignment: AlignmentDirectional(0, 0),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(5),
-                                    child: Image.network(
-                                      functions.getImageURL(
+                                    child: CachedNetworkImage(
+                                      imageUrl: functions.getImageURL(
                                           listViewTemplesRecord.tempDetailsImg
                                               .toList()),
                                       width: 150,
@@ -153,7 +179,7 @@ class _FavouriteTempelsWidgetState extends State<FavouriteTempelsWidget> {
                     ),
                   );
                 },
-              );
+              ).animated([animationsMap['listViewOnPageLoadAnimation']]);
             },
           ),
         ),

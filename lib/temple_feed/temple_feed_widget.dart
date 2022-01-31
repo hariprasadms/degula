@@ -1,11 +1,14 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/no_temples_yet_widget.dart';
+import '../famous_temples/famous_temples_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../templedetails/templedetails_widget.dart';
+import '../temples_feed_page_search/temples_feed_page_search_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +27,23 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
       fadeIn: true,
+      initialState: AnimationState(
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        opacity: 1,
+      ),
+    ),
+    'columnOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      fadeIn: true,
+      initialState: AnimationState(
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        opacity: 1,
+      ),
     ),
   };
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -45,6 +65,16 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.primaryColor,
         automaticallyImplyLeading: false,
+        leading: InkWell(
+          onTap: () async {
+            scaffoldKey.currentState.openDrawer();
+          },
+          child: Icon(
+            Icons.menu,
+            color: FlutterFlowTheme.tertiaryColor,
+            size: 28,
+          ),
+        ),
         title: Text(
           'ದೇವಸ್ಥಾನಗಳು',
           style: FlutterFlowTheme.bodyText1.override(
@@ -53,11 +83,121 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
             fontSize: 18,
           ),
         ),
-        actions: [],
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TemplesFeedPageSearchWidget(),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.search,
+                color: FlutterFlowTheme.tertiaryColor,
+                size: 24,
+              ),
+            ),
+          ),
+        ],
         centerTitle: true,
         elevation: 4,
       ),
       backgroundColor: Color(0xFFF5F5F5),
+      drawer: Drawer(
+        elevation: 16,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: 100,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.primaryColor,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: Icon(
+                            Icons.account_circle,
+                            color: FlutterFlowTheme.tertiaryColor,
+                            size: 50,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                          child: Text(
+                            'Guest  user',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.tertiaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                    child: InkWell(
+                      onTap: () async {
+                        if (scaffoldKey.currentState.isDrawerOpen ||
+                            scaffoldKey.currentState.isEndDrawerOpen) {
+                          Navigator.pop(context);
+                        }
+                        await Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                            reverseDuration: Duration(milliseconds: 0),
+                            child: FamousTemplesWidget(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEEEEEE),
+                        ),
+                        alignment: AlignmentDirectional(0.10000000000000009, 0),
+                        child: Align(
+                          alignment: AlignmentDirectional(-0.65, 0),
+                          child: Text(
+                            'ಪ್ರಸಿದ್ಧ ದೇವಾಲಯಗಳು',
+                            style: FlutterFlowTheme.title2.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ).animated([animationsMap['columnOnPageLoadAnimation']]),
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 0),
@@ -82,7 +222,9 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
               }
               List<TemplesRecord> listViewTemplesRecordList = snapshot.data;
               if (listViewTemplesRecordList.isEmpty) {
-                return NoTemplesYetWidget();
+                return Center(
+                  child: NoTemplesYetWidget(),
+                );
               }
               return ListView.builder(
                 padding: EdgeInsets.zero,
@@ -119,15 +261,16 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
                               ),
                               child: Stack(
                                 children: [
-                                  Image.network(
-                                    functions.getImageURL(listViewTemplesRecord
-                                        .tempDetailsImg
-                                        .toList()),
+                                  CachedNetworkImage(
+                                    imageUrl: functions.getImageURL(
+                                        listViewTemplesRecord.tempDetailsImg
+                                            .toList()),
                                     width: double.infinity,
                                     height: double.infinity,
                                     fit: BoxFit.cover,
                                   ),
                                   if (listViewTemplesRecord.favBy
+                                          .toList()
                                           .contains(currentUserUid) ??
                                       true)
                                     Align(

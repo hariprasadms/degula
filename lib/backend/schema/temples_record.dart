@@ -47,6 +47,12 @@ abstract class TemplesRecord
   String get cityKanName;
 
   @nullable
+  String get templeEngName;
+
+  @nullable
+  bool get famous;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -61,7 +67,9 @@ abstract class TemplesRecord
     ..website = ''
     ..phoneNumber = ''
     ..favBy = ListBuilder()
-    ..cityKanName = '';
+    ..cityKanName = ''
+    ..templeEngName = ''
+    ..famous = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('temples');
@@ -73,6 +81,45 @@ abstract class TemplesRecord
   static Future<TemplesRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
       .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+
+  static TemplesRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      TemplesRecord(
+        (c) => c
+          ..templename = snapshot.data['templename']
+          ..cityname = snapshot.data['cityname']
+          ..address = snapshot.data['address']
+          ..story = snapshot.data['story']
+          ..publishe = snapshot.data['publishe']
+          ..tempDetailsImg =
+              safeGet(() => ListBuilder(snapshot.data['tempDetailsImg']))
+          ..geoLocation = safeGet(() => LatLng(
+                snapshot.data['_geoloc']['lat'],
+                snapshot.data['_geoloc']['lng'],
+              ))
+          ..templePlaceName = snapshot.data['templePlaceName']
+          ..website = snapshot.data['website']
+          ..phoneNumber = snapshot.data['phoneNumber']
+          ..favBy = safeGet(() => ListBuilder(snapshot.data['favBy']))
+          ..cityKanName = snapshot.data['cityKanName']
+          ..templeEngName = snapshot.data['templeEngName']
+          ..famous = snapshot.data['famous']
+          ..reference = TemplesRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<TemplesRecord>> search(
+          {String term,
+          FutureOr<LatLng> location,
+          int maxResults,
+          double searchRadiusMeters}) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'temples',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   TemplesRecord._();
   factory TemplesRecord([void Function(TemplesRecordBuilder) updates]) =
@@ -95,6 +142,8 @@ Map<String, dynamic> createTemplesRecordData({
   String website,
   String phoneNumber,
   String cityKanName,
+  String templeEngName,
+  bool famous,
 }) =>
     serializers.toFirestore(
         TemplesRecord.serializer,
@@ -110,4 +159,6 @@ Map<String, dynamic> createTemplesRecordData({
           ..website = website
           ..phoneNumber = phoneNumber
           ..favBy = null
-          ..cityKanName = cityKanName));
+          ..cityKanName = cityKanName
+          ..templeEngName = templeEngName
+          ..famous = famous));

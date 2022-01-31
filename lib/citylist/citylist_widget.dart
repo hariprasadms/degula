@@ -1,10 +1,12 @@
 import '../backend/backend.dart';
+import '../cities_search_page/cities_search_page_widget.dart';
 import '../citytemples/citytemples_widget.dart';
 import '../components/no_temples_yet_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,6 +25,12 @@ class _CitylistWidgetState extends State<CitylistWidget>
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
       fadeIn: true,
+      initialState: AnimationState(
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        opacity: 1,
+      ),
     ),
   };
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -55,10 +63,20 @@ class _CitylistWidgetState extends State<CitylistWidget>
         actions: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-            child: Icon(
-              Icons.search,
-              color: FlutterFlowTheme.tertiaryColor,
-              size: 24,
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CitiesSearchPageWidget(),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.search,
+                color: FlutterFlowTheme.tertiaryColor,
+                size: 24,
+              ),
             ),
           ),
         ],
@@ -118,8 +136,8 @@ class _CitylistWidgetState extends State<CitylistWidget>
                       children: [
                         Align(
                           alignment: AlignmentDirectional(0, 0),
-                          child: Image.network(
-                            functions.getImageURL(
+                          child: CachedNetworkImage(
+                            imageUrl: functions.getImageURL(
                                 listViewCitiesRecord.cityphoto.toList()),
                             width: double.infinity,
                             height: double.infinity,

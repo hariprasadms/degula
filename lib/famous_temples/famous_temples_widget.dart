@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CitytemplesWidget extends StatefulWidget {
-  const CitytemplesWidget({
+class FamousTemplesWidget extends StatefulWidget {
+  const FamousTemplesWidget({
     Key key,
     this.cityname,
     this.kannadaName,
@@ -22,10 +22,10 @@ class CitytemplesWidget extends StatefulWidget {
   final String kannadaName;
 
   @override
-  _CitytemplesWidgetState createState() => _CitytemplesWidgetState();
+  _FamousTemplesWidgetState createState() => _FamousTemplesWidgetState();
 }
 
-class _CitytemplesWidgetState extends State<CitytemplesWidget>
+class _FamousTemplesWidgetState extends State<FamousTemplesWidget>
     with TickerProviderStateMixin {
   final animationsMap = {
     'listViewOnPageLoadAnimation': AnimationInfo(
@@ -71,7 +71,7 @@ class _CitytemplesWidgetState extends State<CitytemplesWidget>
         backgroundColor: FlutterFlowTheme.primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
-          widget.kannadaName,
+          'ಪ್ರಸಿದ್ಧ ದೇವಾಲಯಗಳು',
           style: FlutterFlowTheme.bodyText1.override(
             fontFamily: 'Poppins',
             color: FlutterFlowTheme.tertiaryColor,
@@ -89,7 +89,7 @@ class _CitytemplesWidgetState extends State<CitytemplesWidget>
           child: StreamBuilder<List<TemplesRecord>>(
             stream: queryTemplesRecord(
               queryBuilder: (templesRecord) => templesRecord
-                  .where('cityname', isEqualTo: widget.cityname)
+                  .where('famous', isEqualTo: true)
                   .where('publishe', isEqualTo: true),
             ),
             builder: (context, snapshot) {

@@ -43,6 +43,31 @@ abstract class CitiesRecord
       .get()
       .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
+  static CitiesRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      CitiesRecord(
+        (c) => c
+          ..cityname = snapshot.data['cityname']
+          ..englishName = snapshot.data['englishName']
+          ..publishe = snapshot.data['publishe']
+          ..cityphoto = safeGet(() => ListBuilder(snapshot.data['cityphoto']))
+          ..reference = CitiesRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<CitiesRecord>> search(
+          {String term,
+          FutureOr<LatLng> location,
+          int maxResults,
+          double searchRadiusMeters}) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'cities',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
+
   CitiesRecord._();
   factory CitiesRecord([void Function(CitiesRecordBuilder) updates]) =
       _$CitiesRecord;

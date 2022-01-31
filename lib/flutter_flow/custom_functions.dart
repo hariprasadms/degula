@@ -42,3 +42,12 @@ String openMap(LatLng coordinents) {
   // Add your function code here!
   return 'https://www.google.com/maps/search/?api=1&query=$alatitude,$blatitude';
 }
+
+bool isPhotoUploaded(String uploadedFileUrl) {
+  // Add your function code here!
+  if (uploadedFileUrl.isEmpty) {
+    return false;
+  } else {
+    return true;
+  }
+}

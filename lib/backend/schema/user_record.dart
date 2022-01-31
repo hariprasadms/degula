@@ -35,6 +35,23 @@ abstract class UserRecord implements Built<UserRecord, UserRecordBuilder> {
   String get phoneNumber;
 
   @nullable
+  bool get isVolunteer;
+
+  @nullable
+  @BuiltValueField(wireName: 'city_list')
+  BuiltList<DocumentReference> get cityList;
+
+  @nullable
+  @BuiltValueField(wireName: 'temple_list')
+  BuiltList<DocumentReference> get templeList;
+
+  @nullable
+  bool get isVolunteerReqSubmitted;
+
+  @nullable
+  String get address;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -44,7 +61,12 @@ abstract class UserRecord implements Built<UserRecord, UserRecordBuilder> {
     ..displayName = ''
     ..photoUrl = ''
     ..uid = ''
-    ..phoneNumber = '';
+    ..phoneNumber = ''
+    ..isVolunteer = false
+    ..cityList = ListBuilder()
+    ..templeList = ListBuilder()
+    ..isVolunteerReqSubmitted = false
+    ..address = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('user');
@@ -74,6 +96,9 @@ Map<String, dynamic> createUserRecordData({
   String uid,
   DateTime createdTime,
   String phoneNumber,
+  bool isVolunteer,
+  bool isVolunteerReqSubmitted,
+  String address,
 }) =>
     serializers.toFirestore(
         UserRecord.serializer,
@@ -84,4 +109,9 @@ Map<String, dynamic> createUserRecordData({
           ..photoUrl = photoUrl
           ..uid = uid
           ..createdTime = createdTime
-          ..phoneNumber = phoneNumber));
+          ..phoneNumber = phoneNumber
+          ..isVolunteer = isVolunteer
+          ..cityList = null
+          ..templeList = null
+          ..isVolunteerReqSubmitted = isVolunteerReqSubmitted
+          ..address = address));

@@ -34,6 +34,23 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
       fadeIn: true,
+      initialState: AnimationState(
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        opacity: 1,
+      ),
+    ),
+    'googleMapOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      fadeIn: true,
+      initialState: AnimationState(
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        opacity: 1,
+      ),
     ),
   };
 
@@ -106,17 +123,20 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                 return ToggleIcon(
                   onPressed: () async {
                     final favByElement = currentUserUid;
-                    final favByUpdate =
-                        toggleIconTemplesRecord.favBy.contains(favByElement)
-                            ? FieldValue.arrayRemove([favByElement])
-                            : FieldValue.arrayUnion([favByElement]);
+                    final favByUpdate = toggleIconTemplesRecord.favBy
+                            .toList()
+                            .contains(favByElement)
+                        ? FieldValue.arrayRemove([favByElement])
+                        : FieldValue.arrayUnion([favByElement]);
                     final templesUpdateData = {
                       'favBy': favByUpdate,
                     };
                     await toggleIconTemplesRecord.reference
                         .update(templesUpdateData);
                   },
-                  value: toggleIconTemplesRecord.favBy.contains(currentUserUid),
+                  value: toggleIconTemplesRecord.favBy
+                      .toList()
+                      .contains(currentUserUid),
                   onIcon: Icon(
                     Icons.favorite,
                     color: FlutterFlowTheme.tertiaryColor,
@@ -275,7 +295,7 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                         mapType: MapType.normal,
                         style: GoogleMapStyle.standard,
                         initialZoom: 14,
-                        allowInteraction: false,
+                        allowInteraction: true,
                         allowZoom: false,
                         showZoomControls: false,
                         showLocation: false,
@@ -283,7 +303,8 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                         showMapToolbar: false,
                         showTraffic: false,
                         centerMapOnMarkerTap: true,
-                      ),
+                      ).animated(
+                          [animationsMap['googleMapOnPageLoadAnimation']]),
                     ),
                   ),
                 ],
