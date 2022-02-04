@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
+import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -20,11 +21,10 @@ class VolunteerDetailsWidget extends StatefulWidget {
 }
 
 class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
-  String uploadedFileUrl = '';
+  String dropDownValue;
   TextEditingController textController1;
   TextEditingController textController2;
-  TextEditingController textController3;
-  TextEditingController textController4;
+  String uploadedFileUrl = '';
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -33,8 +33,6 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
     super.initState();
     textController1 = TextEditingController();
     textController2 = TextEditingController();
-    textController3 = TextEditingController();
-    textController4 = TextEditingController();
   }
 
   @override
@@ -84,6 +82,72 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                 color: Color(0xFFE6E6E6),
                               ),
                             ),
+                            child: StreamBuilder<List<TemplesRecord>>(
+                              stream: queryTemplesRecord(),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: SpinKitSquareCircle(
+                                        color: FlutterFlowTheme.primaryColor,
+                                        size: 50,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<TemplesRecord> dropDownTemplesRecordList =
+                                    snapshot.data;
+                                return FlutterFlowDropDown(
+                                  options: dropDownTemplesRecordList
+                                      .map((e) => e.templename)
+                                      .toList()
+                                      .toList(),
+                                  onChanged: (val) =>
+                                      setState(() => dropDownValue = val),
+                                  width: 180,
+                                  height: 50,
+                                  textStyle:
+                                      FlutterFlowTheme.bodyText2.override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF8B97A2),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  hintText: 'Select temple name...',
+                                  fillColor: Colors.white,
+                                  elevation: 2,
+                                  borderColor: Colors.transparent,
+                                  borderWidth: 0,
+                                  borderRadius: 0,
+                                  margin: EdgeInsetsDirectional.fromSTEB(
+                                      12, 4, 12, 4),
+                                  hidesUnderline: true,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: 330,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Color(0xFFE6E6E6),
+                              ),
+                            ),
                             child: Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
@@ -96,13 +160,7 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                 controller: textController1,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Name',
-                                  labelStyle:
-                                      FlutterFlowTheme.bodyText2.override(
-                                    fontFamily: 'Montserrat',
-                                    color: Color(0xFF8B97A2),
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  labelText: ' Rason to be volunteer ',
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
@@ -130,6 +188,7 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                           ),
                                           child: Icon(
                                             Icons.clear,
+                                            color: Color(0xFF656161),
                                             size: 22,
                                           ),
                                         )
@@ -140,6 +199,14 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                   color: Color(0xFF8B97A2),
                                   fontWeight: FontWeight.w500,
                                 ),
+                                keyboardType: TextInputType.streetAddress,
+                                validator: (val) {
+                                  if (val.isEmpty) {
+                                    return 'This field is required';
+                                  }
+
+                                  return null;
+                                },
                               ),
                             ),
                           ),
@@ -175,13 +242,7 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                 controller: textController2,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Email address',
-                                  labelStyle:
-                                      FlutterFlowTheme.bodyText2.override(
-                                    fontFamily: 'Montserrat',
-                                    color: Color(0xFF8B97A2),
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  labelText: ' Your phone number',
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
@@ -209,161 +270,11 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                           ),
                                           child: Icon(
                                             Icons.clear,
+                                            color: Color(0xFF656161),
                                             size: 22,
                                           ),
                                         )
                                       : null,
-                                ),
-                                style: FlutterFlowTheme.bodyText2.override(
-                                  fontFamily: 'Montserrat',
-                                  color: Color(0xFF8B97A2),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                                validator: (val) {
-                                  if (val.isEmpty) {
-                                    return 'This field is required';
-                                  }
-
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            width: 330,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Color(0xFFE6E6E6),
-                              ),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                              child: TextFormField(
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  'textController3',
-                                  Duration(milliseconds: 2000),
-                                  () => setState(() {}),
-                                ),
-                                controller: textController3,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: ' Address',
-                                  labelStyle:
-                                      FlutterFlowTheme.bodyText2.override(
-                                    fontFamily: 'Montserrat',
-                                    color: Color(0xFF8B97A2),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  suffixIcon: textController3.text.isNotEmpty
-                                      ? InkWell(
-                                          onTap: () => setState(
-                                            () => textController3.clear(),
-                                          ),
-                                          child: Icon(
-                                            Icons.clear,
-                                            size: 22,
-                                          ),
-                                        )
-                                      : null,
-                                ),
-                                style: FlutterFlowTheme.bodyText2.override(
-                                  fontFamily: 'Montserrat',
-                                  color: Color(0xFF8B97A2),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                keyboardType: TextInputType.streetAddress,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            width: 330,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Color(0xFFE6E6E6),
-                              ),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                              child: TextFormField(
-                                controller: textController4,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: ' Phone number',
-                                  labelStyle:
-                                      FlutterFlowTheme.bodyText2.override(
-                                    fontFamily: 'Montserrat',
-                                    color: Color(0xFF8B97A2),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
                                 ),
                                 style: FlutterFlowTheme.bodyText2.override(
                                   fontFamily: 'Montserrat',
@@ -371,6 +282,13 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                   fontWeight: FontWeight.w500,
                                 ),
                                 keyboardType: TextInputType.multiline,
+                                validator: (val) {
+                                  if (val.isEmpty) {
+                                    return 'This field is required';
+                                  }
+
+                                  return null;
+                                },
                               ),
                             ),
                           ),
@@ -408,7 +326,7 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                         style:
                                             FlutterFlowTheme.bodyText1.override(
                                           fontFamily: 'Montserrat',
-                                          color: Color(0xFF8E8989),
+                                          color: Color(0xFF8B97A2),
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -428,8 +346,10 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                             selectedMedia.storagePath,
                                             context)) {
                                       showUploadMessage(
-                                          context, 'Uploading file...',
-                                          showLoading: true);
+                                        context,
+                                        'Uploading file...',
+                                        showLoading: true,
+                                      );
                                       final downloadUrl = await uploadData(
                                           selectedMedia.storagePath,
                                           selectedMedia.bytes);
@@ -438,10 +358,15 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                       if (downloadUrl != null) {
                                         setState(() =>
                                             uploadedFileUrl = downloadUrl);
-                                        showUploadMessage(context, 'Success!');
+                                        showUploadMessage(
+                                          context,
+                                          'Success!',
+                                        );
                                       } else {
                                         showUploadMessage(
-                                            context, 'Failed to upload media');
+                                          context,
+                                          'Failed to upload media',
+                                        );
                                         return;
                                       }
                                     }
@@ -477,36 +402,47 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                         if (!formKey.currentState.validate()) {
                           return;
                         }
-                        final userUpdateData = createUserRecordData(
-                          id: currentUserUid,
-                          email: textController2.text,
-                          displayName: textController1.text,
-                          photoUrl: uploadedFileUrl,
-                          uid: currentUserUid,
-                          phoneNumber: textController4.text,
-                          address: textController3.text,
-                          isVolunteerReqSubmitted: true,
-                          isVolunteer: false,
-                        );
-                        await currentUserReference.update(userUpdateData);
-                        setState(() {
-                          textController4.clear();
-                          textController3.clear();
-                          textController2.clear();
-                          textController1.clear();
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Request submitted',
-                              style: TextStyle(
-                                color: FlutterFlowTheme.tertiaryColor,
+                        if (currentUserDocument?.valunteerTempNames
+                            .contains(dropDownValue)) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'You are already a volunteer for selected temple.',
+                                style: TextStyle(
+                                  color: FlutterFlowTheme.tertiaryColor,
+                                ),
                               ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor: Color(0xFFF06427),
                             ),
-                            duration: Duration(milliseconds: 4000),
-                            backgroundColor: FlutterFlowTheme.secondaryColor,
-                          ),
+                          );
+                        }
+                        if (!(currentUserDocument?.valunteerTempNames
+                            .contains(dropDownValue))) {
+                          final userUpdateData = {
+                            'valunteer_temp_names':
+                                FieldValue.arrayUnion([dropDownValue]),
+                          };
+                          await currentUserReference.update(userUpdateData);
+                        } else {
+                          return;
+                        }
+                        final tempvalunteersCreateData =
+                            createTempvalunteersRecordData(
+                          templename: dropDownValue,
+                          valunteerName: currentUserDisplayName,
+                          valunteerUid: currentUserUid,
+                          valunteerPhone: textController2.text,
+                          valunteerEmail: currentUserEmail,
+                          valunteerReason: textController1.text,
+                          valunteerPhoto: uploadedFileUrl,
+                          isApproved: false,
+                          isRejected: false,
+                          isInPending: true,
                         );
+                        await TempvalunteersRecord.collection
+                            .doc()
+                            .set(tempvalunteersCreateData);
                         await Navigator.push(
                           context,
                           MaterialPageRoute(

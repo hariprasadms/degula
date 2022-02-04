@@ -93,7 +93,6 @@ class _CitiesSearchPageWidgetState extends State<CitiesSearchPageWidget>
                 obscureText: false,
                 decoration: InputDecoration(
                   hintText: 'ಸಿಟಿ ಹೆಸರನ್ನು search ಮಾಡಿ...',
-                  hintStyle: FlutterFlowTheme.bodyText1,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xFFE7E3E3),
@@ -145,10 +144,7 @@ class _CitiesSearchPageWidgetState extends State<CitiesSearchPageWidget>
                   padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                   child: FutureBuilder<List<CitiesRecord>>(
                     future: CitiesRecord.search(
-                      term: valueOrDefault<String>(
-                        textController.text,
-                        'b',
-                      ),
+                      term: textController.text,
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.

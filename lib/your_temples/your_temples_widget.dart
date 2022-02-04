@@ -1,6 +1,10 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
+import '../components/no_temples_yet_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../main.dart';
+import '../volunteer_details/volunteer_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,14 +24,14 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.secondaryColor,
+        backgroundColor: Color(0xFFEC4509),
         automaticallyImplyLeading: false,
         leading: InkWell(
           onTap: () async {
             await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NavBarPage(initialPage: 'temple_feed'),
+                builder: (context) => NavBarPage(initialPage: 'about_temple'),
               ),
             );
           },
@@ -45,7 +49,26 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
             fontSize: 16,
           ),
         ),
-        actions: [],
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VolunteerDetailsWidget(),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.add,
+                color: FlutterFlowTheme.tertiaryColor,
+                size: 30,
+              ),
+            ),
+          ),
+        ],
         centerTitle: true,
         elevation: 4,
       ),
@@ -75,42 +98,162 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    ListView(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        ListTile(
-                          title: Text(
-                            'Lorem ipsum dolor...',
-                            style: FlutterFlowTheme.title3,
-                          ),
-                          subtitle: Text(
-                            'Lorem ipsum dolor...',
-                            style: FlutterFlowTheme.subtitle2,
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Color(0xFF303030),
-                            size: 20,
-                          ),
-                          tileColor: Color(0xFFF5F5F5),
-                          dense: false,
-                        ),
-                      ],
-                    ),
-                    Text(
-                      'Tab View 2',
-                      style: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 32,
+                    StreamBuilder<List<TempvalunteersRecord>>(
+                      stream: queryTempvalunteersRecord(
+                        queryBuilder: (tempvalunteersRecord) =>
+                            tempvalunteersRecord
+                                .where('isApproved', isEqualTo: true)
+                                .where('valunteer_uid',
+                                    isEqualTo: currentUserUid),
                       ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: SpinKitSquareCircle(
+                                color: FlutterFlowTheme.primaryColor,
+                                size: 50,
+                              ),
+                            ),
+                          );
+                        }
+                        List<TempvalunteersRecord>
+                            listViewTempvalunteersRecordList = snapshot.data;
+                        if (listViewTempvalunteersRecordList.isEmpty) {
+                          return NoTemplesYetWidget();
+                        }
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewTempvalunteersRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
+                            final listViewTempvalunteersRecord =
+                                listViewTempvalunteersRecordList[listViewIndex];
+                            return ListTile(
+                              title: Text(
+                                listViewTempvalunteersRecord.templename,
+                                style: FlutterFlowTheme.title3,
+                              ),
+                              subtitle: Text(
+                                listViewTempvalunteersRecord.valunteerReason,
+                                style: FlutterFlowTheme.subtitle2,
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFF303030),
+                                size: 20,
+                              ),
+                              tileColor: Color(0xFFF5F5F5),
+                              dense: false,
+                            );
+                          },
+                        );
+                      },
                     ),
-                    Text(
-                      'Tab View 3',
-                      style: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 32,
+                    StreamBuilder<List<TempvalunteersRecord>>(
+                      stream: queryTempvalunteersRecord(
+                        queryBuilder: (tempvalunteersRecord) =>
+                            tempvalunteersRecord
+                                .where('isInPending', isEqualTo: true)
+                                .where('valunteer_uid',
+                                    isEqualTo: currentUserUid),
                       ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: SpinKitSquareCircle(
+                                color: FlutterFlowTheme.primaryColor,
+                                size: 50,
+                              ),
+                            ),
+                          );
+                        }
+                        List<TempvalunteersRecord>
+                            listViewTempvalunteersRecordList = snapshot.data;
+                        if (listViewTempvalunteersRecordList.isEmpty) {
+                          return NoTemplesYetWidget();
+                        }
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewTempvalunteersRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
+                            final listViewTempvalunteersRecord =
+                                listViewTempvalunteersRecordList[listViewIndex];
+                            return ListTile(
+                              title: Text(
+                                listViewTempvalunteersRecord.templename,
+                                style: FlutterFlowTheme.title3,
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFF303030),
+                                size: 20,
+                              ),
+                              tileColor: Color(0xFFF5F5F5),
+                              dense: false,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    StreamBuilder<List<TempvalunteersRecord>>(
+                      stream: queryTempvalunteersRecord(
+                        queryBuilder: (tempvalunteersRecord) =>
+                            tempvalunteersRecord
+                                .where('isRejected', isEqualTo: true)
+                                .where('valunteer_uid',
+                                    isEqualTo: currentUserUid),
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: SpinKitSquareCircle(
+                                color: FlutterFlowTheme.primaryColor,
+                                size: 50,
+                              ),
+                            ),
+                          );
+                        }
+                        List<TempvalunteersRecord>
+                            listViewTempvalunteersRecordList = snapshot.data;
+                        if (listViewTempvalunteersRecordList.isEmpty) {
+                          return NoTemplesYetWidget();
+                        }
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewTempvalunteersRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
+                            final listViewTempvalunteersRecord =
+                                listViewTempvalunteersRecordList[listViewIndex];
+                            return ListTile(
+                              title: Text(
+                                listViewTempvalunteersRecord.templename,
+                                style: FlutterFlowTheme.title3,
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFF303030),
+                                size: 20,
+                              ),
+                              tileColor: Color(0xFFF5F5F5),
+                              dense: false,
+                            );
+                          },
+                        );
+                      },
                     ),
                   ],
                 ),

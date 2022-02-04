@@ -53,7 +53,7 @@ class _CitylistWidgetState extends State<CitylistWidget>
         backgroundColor: FlutterFlowTheme.primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
-          'ಕರ್ನಾಟಕ ಜಿಲ್ಲೆಗಳು',
+          'Karnataka Districts',
           style: FlutterFlowTheme.bodyText1.override(
             fontFamily: 'Poppins',
             color: FlutterFlowTheme.tertiaryColor,

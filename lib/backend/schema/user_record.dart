@@ -52,6 +52,14 @@ abstract class UserRecord implements Built<UserRecord, UserRecordBuilder> {
   String get address;
 
   @nullable
+  @BuiltValueField(wireName: 'valunteer_temp_names')
+  BuiltList<String> get valunteerTempNames;
+
+  @nullable
+  @BuiltValueField(wireName: 'degula_admin')
+  bool get degulaAdmin;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -66,7 +74,9 @@ abstract class UserRecord implements Built<UserRecord, UserRecordBuilder> {
     ..cityList = ListBuilder()
     ..templeList = ListBuilder()
     ..isVolunteerReqSubmitted = false
-    ..address = '';
+    ..address = ''
+    ..valunteerTempNames = ListBuilder()
+    ..degulaAdmin = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('user');
@@ -99,6 +109,7 @@ Map<String, dynamic> createUserRecordData({
   bool isVolunteer,
   bool isVolunteerReqSubmitted,
   String address,
+  bool degulaAdmin,
 }) =>
     serializers.toFirestore(
         UserRecord.serializer,
@@ -114,4 +125,6 @@ Map<String, dynamic> createUserRecordData({
           ..cityList = null
           ..templeList = null
           ..isVolunteerReqSubmitted = isVolunteerReqSubmitted
-          ..address = address));
+          ..address = address
+          ..valunteerTempNames = null
+          ..degulaAdmin = degulaAdmin));

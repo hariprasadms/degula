@@ -8,6 +8,7 @@ import 'schema/cities_record.dart';
 import 'schema/temples_record.dart';
 import 'schema/about_record.dart';
 import 'schema/user_record.dart';
+import 'schema/tempvalunteers_record.dart';
 import 'schema/serializers.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +19,7 @@ export 'schema/cities_record.dart';
 export 'schema/temples_record.dart';
 export 'schema/about_record.dart';
 export 'schema/user_record.dart';
+export 'schema/tempvalunteers_record.dart';
 
 /// Functions to query CitiesRecords (as a Stream and as a Future).
 Stream<List<CitiesRecord>> queryCitiesRecord(
@@ -77,6 +79,23 @@ Future<List<UserRecord>> queryUserRecordOnce(
         int limit = -1,
         bool singleRecord = false}) =>
     queryCollectionOnce(UserRecord.collection, UserRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+/// Functions to query TempvalunteersRecords (as a Stream and as a Future).
+Stream<List<TempvalunteersRecord>> queryTempvalunteersRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(
+        TempvalunteersRecord.collection, TempvalunteersRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<List<TempvalunteersRecord>> queryTempvalunteersRecordOnce(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollectionOnce(
+        TempvalunteersRecord.collection, TempvalunteersRecord.serializer,
         queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
 
 Stream<List<T>> queryCollection<T>(

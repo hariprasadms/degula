@@ -5,7 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'auth/firebase_user_provider.dart';
 import 'auth/auth_util.dart';
 import 'backend/push_notifications/push_notifications_util.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
+import 'flutter_flow/flutter_flow_theme.dart';
+import 'flutter_flow/internationalization.dart';
 import 'package:degula/bording_page/bording_page_widget.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,14 +28,20 @@ class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
+
+  static _MyAppState of(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>();
 }
 
 class _MyAppState extends State<MyApp> {
+  Locale _locale;
   Stream<DegulaFirebaseUser> userStream;
   DegulaFirebaseUser initialUser;
   bool displaySplashImage = true;
   final authUserSub = authenticatedUserStream.listen((_) {});
   final fcmTokenSub = fcmTokenUserStream.listen((_) {});
+
+  void setLocale(Locale value) => setState(() => _locale = value);
 
   @override
   void initState() {
@@ -57,11 +64,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Degula',
       localizationsDelegates: [
+        FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('en', '')],
+      locale: _locale,
+      supportedLocales: const [
+        Locale('en', ''),
+      ],
       theme: ThemeData(primarySwatch: Colors.blue),
       home: initialUser == null || displaySplashImage
           ? Container(
@@ -127,8 +138,8 @@ class _NavBarPageState extends State<NavBarPage> {
           width: 2,
         ),
         tabBorderRadius: 100,
-        tabMargin: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 20),
-        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+        tabMargin: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 20),
+        padding: EdgeInsetsDirectional.fromSTEB(7, 7, 7, 7),
         gap: 10,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         duration: Duration(milliseconds: 800),

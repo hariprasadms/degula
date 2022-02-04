@@ -16,9 +16,11 @@ import '../../bording_page/bording_page_widget.dart';
 import '../../cities_search_page/cities_search_page_widget.dart';
 import '../../temples_feed_page_search/temples_feed_page_search_widget.dart';
 import '../../famous_temples/famous_temples_widget.dart';
-import '../../volunteer_login/volunteer_login_widget.dart';
 import '../../volunteer_details/volunteer_details_widget.dart';
 import '../../your_temples/your_temples_widget.dart';
+import '../../degualadmin/degualadmin_widget.dart';
+import '../../degula_users/degula_users_widget.dart';
+import '../../degula_valunteers/degula_valunteers_widget.dart';
 
 class PushNotificationsHandler extends StatefulWidget {
   const PushNotificationsHandler(
@@ -108,9 +110,11 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         cityname: getParameter(data, 'cityname'),
         kannadaName: getParameter(data, 'kannadaName'),
       ),
-  'volunteer_login': (data) async => VolunteerLoginWidget(),
   'volunteer_details': (data) async => VolunteerDetailsWidget(),
   'your_temples': (data) async => YourTemplesWidget(),
+  'degualadmin': (data) async => DegualadminWidget(),
+  'degula_users': (data) async => DegulaUsersWidget(),
+  'degula_valunteers': (data) async => DegulaValunteersWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

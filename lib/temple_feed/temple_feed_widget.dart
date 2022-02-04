@@ -76,7 +76,7 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
           ),
         ),
         title: Text(
-          'ದೇವಸ್ಥಾನಗಳು',
+          'Temples',
           style: FlutterFlowTheme.bodyText1.override(
             fontFamily: 'Poppins',
             color: FlutterFlowTheme.tertiaryColor,

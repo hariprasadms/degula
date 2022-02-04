@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -105,20 +106,98 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      20, 0, 20, 8),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 19, 0, 0),
+                                    child: Container(
+                                      width: 230,
+                                      height: 44,
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 1, 0, 0),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  final user =
+                                                      await signInWithGoogle(
+                                                          context);
+                                                  if (user == null) {
+                                                    return;
+                                                  }
+                                                  await Navigator
+                                                      .pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NavBarPage(
+                                                              initialPage:
+                                                                  'temple_feed'),
+                                                    ),
+                                                    (r) => false,
+                                                  );
+                                                },
+                                                text: 'Sign in with Google',
+                                                icon: Icon(
+                                                  Icons.add,
+                                                  color: Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                                options: FFButtonOptions(
+                                                  width: 230,
+                                                  height: 44,
+                                                  color: Colors.white,
+                                                  textStyle:
+                                                      GoogleFonts.getFont(
+                                                    'Roboto',
+                                                    color: Color(0xFF606060),
+                                                    fontSize: 17,
+                                                  ),
+                                                  elevation: 4,
+                                                  borderSide: BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 0,
+                                                  ),
+                                                  borderRadius: 0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-0.83, 0),
+                                            child: Container(
+                                              width: 22,
+                                              height: 22,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Image.network(
+                                                'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                isAndroid
+                                    ? Container()
+                                    : Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 16, 0, 0),
+                                            0, 10, 0, 0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             final user =
-                                                await signInAnonymously(
-                                                    context);
+                                                await signInWithApple(context);
                                             if (user == null) {
                                               return;
                                             }
@@ -133,31 +212,28 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                               (r) => false,
                                             );
                                           },
-                                          text: 'ಬನ್ನಿ ನೋಡೋಣ',
+                                          text: 'Sign in with Apple',
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.apple,
+                                          ),
                                           options: FFButtonOptions(
-                                            width: 170,
-                                            height: 50,
-                                            color:
-                                                FlutterFlowTheme.tertiaryColor,
-                                            textStyle: FlutterFlowTheme
-                                                .subtitle2
-                                                .override(
-                                              fontFamily: 'Lexend Deca',
-                                              color: Color(0xFF030303),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
+                                            width: 230,
+                                            height: 44,
+                                            color: Colors.white,
+                                            textStyle: GoogleFonts.getFont(
+                                              'Roboto',
+                                              color: Colors.black,
+                                              fontSize: 17,
                                             ),
+                                            elevation: 4,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 0,
                                             ),
                                             borderRadius: 0,
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
                           ),
@@ -231,15 +307,101 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                       20, 0, 20, 8),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
+                                    children: [],
+                                  ),
+                                ),
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 19, 0, 0),
+                                    child: Container(
+                                      width: 230,
+                                      height: 44,
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 1, 0, 0),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  final user =
+                                                      await signInWithGoogle(
+                                                          context);
+                                                  if (user == null) {
+                                                    return;
+                                                  }
+                                                  await Navigator
+                                                      .pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NavBarPage(
+                                                              initialPage:
+                                                                  'temple_feed'),
+                                                    ),
+                                                    (r) => false,
+                                                  );
+                                                },
+                                                text: 'Sign in with Google',
+                                                icon: Icon(
+                                                  Icons.add,
+                                                  color: Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                                options: FFButtonOptions(
+                                                  width: 230,
+                                                  height: 44,
+                                                  color: Colors.white,
+                                                  textStyle:
+                                                      GoogleFonts.getFont(
+                                                    'Roboto',
+                                                    color: Color(0xFF606060),
+                                                    fontSize: 17,
+                                                  ),
+                                                  elevation: 4,
+                                                  borderSide: BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 0,
+                                                  ),
+                                                  borderRadius: 0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-0.83, 0),
+                                            child: Container(
+                                              width: 22,
+                                              height: 22,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Image.network(
+                                                'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                isAndroid
+                                    ? Container()
+                                    : Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 16, 0, 0),
+                                            0, 10, 0, 0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             final user =
-                                                await signInAnonymously(
-                                                    context);
+                                                await signInWithApple(context);
                                             if (user == null) {
                                               return;
                                             }
@@ -254,31 +416,28 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                               (r) => false,
                                             );
                                           },
-                                          text: 'ಬನ್ನಿ ನೋಡೋಣ',
+                                          text: 'Sign in with Apple',
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.apple,
+                                          ),
                                           options: FFButtonOptions(
-                                            width: 170,
-                                            height: 50,
+                                            width: 230,
+                                            height: 44,
                                             color: Colors.white,
-                                            textStyle: FlutterFlowTheme
-                                                .subtitle2
-                                                .override(
-                                              fontFamily: 'Lexend Deca',
-                                              color: Color(0xFF39D2C0),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
+                                            textStyle: GoogleFonts.getFont(
+                                              'Roboto',
+                                              color: Colors.black,
+                                              fontSize: 17,
                                             ),
-                                            elevation: 2,
+                                            elevation: 4,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 0,
                                             ),
                                             borderRadius: 0,
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
                           ),

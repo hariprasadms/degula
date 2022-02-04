@@ -83,7 +83,6 @@ class _TemplesFeedPageSearchWidgetState
                 obscureText: false,
                 decoration: InputDecoration(
                   hintText: 'ದೇವಸ್ಥಾನ ಹೆಸರನ್ನು search ಮಾಡಿ...',
-                  hintStyle: FlutterFlowTheme.bodyText1,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xFFE7E3E3),

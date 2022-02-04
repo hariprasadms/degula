@@ -87,6 +87,14 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.primaryColor,
         automaticallyImplyLeading: true,
+        title: Text(
+          'Temple Details',
+          style: FlutterFlowTheme.bodyText1.override(
+            fontFamily: 'Poppins',
+            color: FlutterFlowTheme.tertiaryColor,
+            fontSize: 16,
+          ),
+        ),
         actions: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),

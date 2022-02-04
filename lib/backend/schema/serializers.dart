@@ -4,6 +4,7 @@ import 'cities_record.dart';
 import 'temples_record.dart';
 import 'about_record.dart';
 import 'user_record.dart';
+import 'tempvalunteers_record.dart';
 
 import 'index.dart';
 
@@ -19,6 +20,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   TemplesRecord,
   AboutRecord,
   UserRecord,
+  TempvalunteersRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())
