@@ -12,7 +12,7 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'temple_feed/temple_feed_widget.dart';
+import 'temp_feed/temp_feed_widget.dart';
 import 'citylist/citylist_widget.dart';
 import 'favourite_tempels/favourite_tempels_widget.dart';
 import 'about_temple/about_temple_widget.dart';
@@ -35,6 +35,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale;
+  ThemeMode _themeMode = ThemeMode.system;
   Stream<DegulaFirebaseUser> userStream;
   DegulaFirebaseUser initialUser;
   bool displaySplashImage = true;
@@ -42,6 +43,9 @@ class _MyAppState extends State<MyApp> {
   final fcmTokenSub = fcmTokenUserStream.listen((_) {});
 
   void setLocale(Locale value) => setState(() => _locale = value);
+  void setThemeMode(ThemeMode mode) => setState(() {
+        _themeMode = mode;
+      });
 
   @override
   void initState() {
@@ -73,10 +77,11 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: const [
         Locale('en', ''),
       ],
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(brightness: Brightness.light),
+      themeMode: _themeMode,
       home: initialUser == null || displaySplashImage
           ? Container(
-              color: FlutterFlowTheme.tertiaryColor,
+              color: FlutterFlowTheme.of(context).tertiaryColor,
               child: Center(
                 child: Builder(
                   builder: (context) => Image.asset(
@@ -106,7 +111,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPage = 'temple_feed';
+  String _currentPage = 'temp_feed';
 
   @override
   void initState() {
@@ -117,7 +122,7 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'temple_feed': TempleFeedWidget(),
+      'temp_feed': TempFeedWidget(),
       'citylist': CitylistWidget(),
       'favourite_tempels': FavouriteTempelsWidget(),
       'about_temple': AboutTempleWidget(),
@@ -129,12 +134,12 @@ class _NavBarPageState extends State<NavBarPage> {
         selectedIndex: currentIndex,
         onTabChange: (i) =>
             setState(() => _currentPage = tabs.keys.toList()[i]),
-        backgroundColor: FlutterFlowTheme.tertiaryColor,
-        color: Color(0x8A000000),
-        activeColor: FlutterFlowTheme.primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+        color: Color(0xFFA9A3A3),
+        activeColor: FlutterFlowTheme.of(context).primaryColor,
         tabBackgroundColor: Color(0x00000000),
         tabActiveBorder: Border.all(
-          color: FlutterFlowTheme.primaryColor,
+          color: FlutterFlowTheme.of(context).primaryColor,
           width: 2,
         ),
         tabBorderRadius: 100,
@@ -146,7 +151,7 @@ class _NavBarPageState extends State<NavBarPage> {
         haptic: false,
         tabs: [
           GButton(
-            icon: Icons.rss_feed,
+            icon: Icons.dynamic_feed_outlined,
             text: 'Feeds',
             iconSize: 24,
           ),

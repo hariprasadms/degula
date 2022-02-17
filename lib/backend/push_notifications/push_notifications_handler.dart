@@ -10,6 +10,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
+import '../../temple_feed/temple_feed_widget.dart';
 import '../../templedetails/templedetails_widget.dart';
 import '../../citytemples/citytemples_widget.dart';
 import '../../bording_page/bording_page_widget.dart';
@@ -21,6 +22,9 @@ import '../../your_temples/your_temples_widget.dart';
 import '../../degualadmin/degualadmin_widget.dart';
 import '../../degula_users/degula_users_widget.dart';
 import '../../degula_valunteers/degula_valunteers_widget.dart';
+import '../../valunteer_temple_posts/valunteer_temple_posts_widget.dart';
+import '../../create_temple_post/create_temple_post_widget.dart';
+import '../../temple_posts/temple_posts_widget.dart';
 
 class PushNotificationsHandler extends StatefulWidget {
   const PushNotificationsHandler(
@@ -75,7 +79,7 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
   @override
   Widget build(BuildContext context) => _loading
       ? Container(
-          color: FlutterFlowTheme.tertiaryColor,
+          color: FlutterFlowTheme.of(context).tertiaryColor,
           child: Center(
             child: Builder(
               builder: (context) => Image.asset(
@@ -91,6 +95,7 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 }
 
 final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
+  'temple_feed': (data) async => TempleFeedWidget(),
   'citylist': (data) async => NavBarPage(initialPage: 'CitylistWidget'),
   'templedetails': (data) async => TempledetailsWidget(
         currenttemple: await getDocumentParameter(
@@ -115,6 +120,15 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'degualadmin': (data) async => DegualadminWidget(),
   'degula_users': (data) async => DegulaUsersWidget(),
   'degula_valunteers': (data) async => DegulaValunteersWidget(),
+  'valunteer_temple_posts': (data) async => ValunteerTemplePostsWidget(
+        templeName: getParameter(data, 'templeName'),
+        temple: await getDocumentParameter(
+            data, 'temple', TemplesRecord.serializer),
+      ),
+  'create_temple_post': (data) async => CreateTemplePostWidget(
+        templeName: getParameter(data, 'templeName'),
+      ),
+  'temple_posts': (data) async => TemplePostsWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

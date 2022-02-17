@@ -1,18 +1,19 @@
 import '../backend/backend.dart';
+import '../create_temple_post/create_temple_post_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DegulaUsersWidget extends StatefulWidget {
-  const DegulaUsersWidget({Key key}) : super(key: key);
+class TemplePostsWidget extends StatefulWidget {
+  const TemplePostsWidget({Key key}) : super(key: key);
 
   @override
-  _DegulaUsersWidgetState createState() => _DegulaUsersWidgetState();
+  _TemplePostsWidgetState createState() => _TemplePostsWidgetState();
 }
 
-class _DegulaUsersWidgetState extends State<DegulaUsersWidget> {
+class _TemplePostsWidgetState extends State<TemplePostsWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -23,14 +24,33 @@ class _DegulaUsersWidgetState extends State<DegulaUsersWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
-          'Degula Users',
+          'Temple Posts',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Poppins',
                 color: FlutterFlowTheme.of(context).tertiaryColor,
                 fontSize: 18,
               ),
         ),
-        actions: [],
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateTemplePostWidget(),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.add,
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                size: 24,
+              ),
+            ),
+          ),
+        ],
         centerTitle: true,
         elevation: 4,
       ),
@@ -38,8 +58,8 @@ class _DegulaUsersWidgetState extends State<DegulaUsersWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: StreamBuilder<List<UserRecord>>(
-            stream: queryUserRecord(),
+          child: StreamBuilder<List<TemplePostsRecord>>(
+            stream: queryTemplePostsRecord(),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
               if (!snapshot.hasData) {
@@ -54,28 +74,27 @@ class _DegulaUsersWidgetState extends State<DegulaUsersWidget> {
                   ),
                 );
               }
-              List<UserRecord> listViewUserRecordList = snapshot.data;
+              List<TemplePostsRecord> listViewTemplePostsRecordList =
+                  snapshot.data;
               return ListView.builder(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
-                itemCount: listViewUserRecordList.length,
+                itemCount: listViewTemplePostsRecordList.length,
                 itemBuilder: (context, listViewIndex) {
-                  final listViewUserRecord =
-                      listViewUserRecordList[listViewIndex];
+                  final listViewTemplePostsRecord =
+                      listViewTemplePostsRecordList[listViewIndex];
                   return ListTile(
                     title: Text(
-                      listViewUserRecord.displayName,
+                      listViewTemplePostsRecord.postTitle,
                       style: FlutterFlowTheme.of(context).title3.override(
                             fontFamily: 'Poppins',
                             fontSize: 18,
+                            fontWeight: FontWeight.normal,
                           ),
                     ),
                     subtitle: Text(
-                      listViewUserRecord.email,
-                      style: FlutterFlowTheme.of(context).subtitle2.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                          ),
+                      listViewTemplePostsRecord.postDetails,
+                      style: FlutterFlowTheme.of(context).subtitle2,
                     ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,

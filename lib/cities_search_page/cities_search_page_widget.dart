@@ -62,15 +62,15 @@ class _CitiesSearchPageWidgetState extends State<CitiesSearchPageWidget>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
           'ಸಿಟಿ  search ಮಾಡಿ',
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
-            color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 18,
-          ),
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                fontSize: 18,
+              ),
         ),
         actions: [],
         centerTitle: true,
@@ -121,7 +121,7 @@ class _CitiesSearchPageWidgetState extends State<CitiesSearchPageWidget>
                   fillColor: Color(0xFFE7E4E4),
                   prefixIcon: Icon(
                     Icons.search,
-                    color: FlutterFlowTheme.primaryColor,
+                    color: FlutterFlowTheme.of(context).primaryColor,
                     size: 22,
                   ),
                   suffixIcon: textController.text.isNotEmpty
@@ -131,13 +131,13 @@ class _CitiesSearchPageWidgetState extends State<CitiesSearchPageWidget>
                           ),
                           child: Icon(
                             Icons.clear,
-                            color: FlutterFlowTheme.primaryColor,
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             size: 22,
                           ),
                         )
                       : null,
                 ),
-                style: FlutterFlowTheme.bodyText1,
+                style: FlutterFlowTheme.of(context).bodyText1,
               ),
               Expanded(
                 child: Padding(
@@ -154,7 +154,7 @@ class _CitiesSearchPageWidgetState extends State<CitiesSearchPageWidget>
                             width: 50,
                             height: 50,
                             child: SpinKitSquareCircle(
-                              color: FlutterFlowTheme.primaryColor,
+                              color: FlutterFlowTheme.of(context).primaryColor,
                               size: 50,
                             ),
                           ),
@@ -193,18 +193,23 @@ class _CitiesSearchPageWidgetState extends State<CitiesSearchPageWidget>
                             child: ListTile(
                               title: Text(
                                 listViewCitiesRecord.cityname,
-                                style: FlutterFlowTheme.title3.override(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 18,
-                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 18,
+                                    ),
                               ),
                               subtitle: Text(
                                 listViewCitiesRecord.englishName,
-                                style: FlutterFlowTheme.subtitle2.override(
-                                  fontFamily: 'Poppins',
-                                  color: FlutterFlowTheme.primaryColor,
-                                  fontSize: 15,
-                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      fontSize: 15,
+                                    ),
                               ),
                               trailing: Icon(
                                 Icons.arrow_forward_ios,

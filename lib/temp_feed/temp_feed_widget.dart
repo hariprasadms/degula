@@ -2,39 +2,25 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../bording_page/bording_page_widget.dart';
 import '../components/no_temples_yet_widget.dart';
+import '../components/temple_post_widget.dart';
 import '../famous_temples/famous_temples_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../templedetails/templedetails_widget.dart';
-import '../temples_feed_page_search/temples_feed_page_search_widget.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TempleFeedWidget extends StatefulWidget {
-  const TempleFeedWidget({Key key}) : super(key: key);
+class TempFeedWidget extends StatefulWidget {
+  const TempFeedWidget({Key key}) : super(key: key);
 
   @override
-  _TempleFeedWidgetState createState() => _TempleFeedWidgetState();
+  _TempFeedWidgetState createState() => _TempFeedWidgetState();
 }
 
-class _TempleFeedWidgetState extends State<TempleFeedWidget>
+class _TempFeedWidgetState extends State<TempFeedWidget>
     with TickerProviderStateMixin {
   final animationsMap = {
-    'listViewOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      fadeIn: true,
-      initialState: AnimationState(
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        opacity: 1,
-      ),
-    ),
     'columnOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
@@ -73,41 +59,22 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
           child: Icon(
             Icons.menu,
             color: FlutterFlowTheme.of(context).tertiaryColor,
-            size: 28,
+            size: 24,
           ),
         ),
         title: Text(
-          'Temples',
+          'Temples Feed',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Poppins',
                 color: FlutterFlowTheme.of(context).tertiaryColor,
                 fontSize: 18,
               ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-            child: InkWell(
-              onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TemplesFeedPageSearchWidget(),
-                  ),
-                );
-              },
-              child: Icon(
-                Icons.search,
-                color: FlutterFlowTheme.of(context).tertiaryColor,
-                size: 24,
-              ),
-            ),
-          ),
-        ],
+        actions: [],
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: Color(0xFFF0EBEB),
       drawer: Drawer(
         elevation: 16,
         child: Column(
@@ -249,13 +216,10 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
         ).animated([animationsMap['columnOnPageLoadAnimation']]),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 0),
-          child: StreamBuilder<List<TemplesRecord>>(
-            stream: queryTemplesRecord(
-              queryBuilder: (templesRecord) =>
-                  templesRecord.where('publishe', isEqualTo: true),
-            ),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: StreamBuilder<List<TemplePostsRecord>>(
+            stream: queryTemplePostsRecord(),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
               if (!snapshot.hasData) {
@@ -270,130 +234,29 @@ class _TempleFeedWidgetState extends State<TempleFeedWidget>
                   ),
                 );
               }
-              List<TemplesRecord> listViewTemplesRecordList = snapshot.data;
-              if (listViewTemplesRecordList.isEmpty) {
-                return Center(
-                  child: NoTemplesYetWidget(),
-                );
+              List<TemplePostsRecord> listViewTemplePostsRecordList =
+                  snapshot.data;
+              if (listViewTemplePostsRecordList.isEmpty) {
+                return NoTemplesYetWidget();
               }
               return ListView.builder(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
-                itemCount: listViewTemplesRecordList.length,
+                itemCount: listViewTemplePostsRecordList.length,
                 itemBuilder: (context, listViewIndex) {
-                  final listViewTemplesRecord =
-                      listViewTemplesRecordList[listViewIndex];
-                  return Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFEEEEEE),
-                      ),
-                      child: InkWell(
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TempledetailsWidget(
-                                currenttemple: listViewTemplesRecord,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 300,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFEEEEEE),
-                              ),
-                              child: Stack(
-                                children: [
-                                  CachedNetworkImage(
-                                    imageUrl: functions.getImageURL(
-                                        listViewTemplesRecord.tempDetailsImg
-                                            .toList()),
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  if (listViewTemplesRecord.favBy
-                                          .toList()
-                                          .contains(currentUserUid) ??
-                                      true)
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(0.86, -0.84),
-                                      child: Icon(
-                                        Icons.favorite,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        size: 28,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: double.infinity,
-                              height: 75,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFEEEEEE),
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(5),
-                                  bottomRight: Radius.circular(5),
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0),
-                                ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          listViewTemplesRecord.templename,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          '${listViewTemplesRecord.templePlaceName}, ${listViewTemplesRecord.cityKanName}',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                fontSize: 13,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                  final listViewTemplePostsRecord =
+                      listViewTemplePostsRecordList[listViewIndex];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEEEEEE),
+                      border: Border.all(
+                        color: Color(0xFFB8AFAF),
                       ),
                     ),
+                    child: TemplePostWidget(),
                   );
                 },
-              ).animated([animationsMap['listViewOnPageLoadAnimation']]);
+              );
             },
           ),
         ),

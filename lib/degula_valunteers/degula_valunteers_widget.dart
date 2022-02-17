@@ -20,15 +20,15 @@ class _DegulaValunteersWidgetState extends State<DegulaValunteersWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
           'Degula Valunteers',
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
-            color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 18,
-          ),
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                fontSize: 18,
+              ),
         ),
         actions: [],
         centerTitle: true,
@@ -48,7 +48,7 @@ class _DegulaValunteersWidgetState extends State<DegulaValunteersWidget> {
                     width: 50,
                     height: 50,
                     child: SpinKitSquareCircle(
-                      color: FlutterFlowTheme.primaryColor,
+                      color: FlutterFlowTheme.of(context).primaryColor,
                       size: 50,
                     ),
                   ),
@@ -66,14 +66,14 @@ class _DegulaValunteersWidgetState extends State<DegulaValunteersWidget> {
                   return ListTile(
                     title: Text(
                       listViewTempvalunteersRecord.valunteerName,
-                      style: FlutterFlowTheme.title3.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 18,
-                      ),
+                      style: FlutterFlowTheme.of(context).title3.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                     ),
                     subtitle: Text(
                       listViewTempvalunteersRecord.templename,
-                      style: FlutterFlowTheme.subtitle2,
+                      style: FlutterFlowTheme.of(context).subtitle2,
                     ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,

@@ -4,6 +4,7 @@ import '../components/no_temples_yet_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../main.dart';
+import '../valunteer_temple_posts/valunteer_temple_posts_widget.dart';
 import '../volunteer_details/volunteer_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,18 +37,18 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
             );
           },
           child: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.tertiaryColor,
+            Icons.arrow_back_ios,
+            color: FlutterFlowTheme.of(context).tertiaryColor,
             size: 24,
           ),
         ),
         title: Text(
           'Your Temples',
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
-            color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 16,
-          ),
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                fontSize: 18,
+              ),
         ),
         actions: [
           Padding(
@@ -63,7 +64,7 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
               },
               child: Icon(
                 Icons.add,
-                color: FlutterFlowTheme.tertiaryColor,
+                color: FlutterFlowTheme.of(context).tertiaryColor,
                 size: 30,
               ),
             ),
@@ -80,8 +81,8 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
           child: Column(
             children: [
               TabBar(
-                labelColor: FlutterFlowTheme.primaryColor,
-                labelStyle: FlutterFlowTheme.bodyText1,
+                labelColor: FlutterFlowTheme.of(context).primaryColor,
+                labelStyle: FlutterFlowTheme.of(context).bodyText1,
                 indicatorColor: Color(0xFFF06427),
                 tabs: [
                   Tab(
@@ -114,7 +115,8 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
                               width: 50,
                               height: 50,
                               child: SpinKitSquareCircle(
-                                color: FlutterFlowTheme.primaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
                                 size: 50,
                               ),
                             ),
@@ -132,22 +134,38 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
                           itemBuilder: (context, listViewIndex) {
                             final listViewTempvalunteersRecord =
                                 listViewTempvalunteersRecordList[listViewIndex];
-                            return ListTile(
-                              title: Text(
-                                listViewTempvalunteersRecord.templename,
-                                style: FlutterFlowTheme.title3,
+                            return InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ValunteerTemplePostsWidget(
+                                      templeName: listViewTempvalunteersRecord
+                                          .templename,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: ListTile(
+                                title: Text(
+                                  listViewTempvalunteersRecord.templename,
+                                  style: FlutterFlowTheme.of(context)
+                                      .title3
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Color(0xFF303030),
+                                  size: 20,
+                                ),
+                                tileColor: Color(0xFFF5F5F5),
+                                dense: false,
                               ),
-                              subtitle: Text(
-                                listViewTempvalunteersRecord.valunteerReason,
-                                style: FlutterFlowTheme.subtitle2,
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF303030),
-                                size: 20,
-                              ),
-                              tileColor: Color(0xFFF5F5F5),
-                              dense: false,
                             );
                           },
                         );
@@ -169,7 +187,8 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
                               width: 50,
                               height: 50,
                               child: SpinKitSquareCircle(
-                                color: FlutterFlowTheme.primaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
                                 size: 50,
                               ),
                             ),
@@ -190,7 +209,13 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
                             return ListTile(
                               title: Text(
                                 listViewTempvalunteersRecord.templename,
-                                style: FlutterFlowTheme.title3,
+                                style: FlutterFlowTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                               ),
                               trailing: Icon(
                                 Icons.arrow_forward_ios,
@@ -220,7 +245,8 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
                               width: 50,
                               height: 50,
                               child: SpinKitSquareCircle(
-                                color: FlutterFlowTheme.primaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
                                 size: 50,
                               ),
                             ),
@@ -241,7 +267,13 @@ class _YourTemplesWidgetState extends State<YourTemplesWidget> {
                             return ListTile(
                               title: Text(
                                 listViewTempvalunteersRecord.templename,
-                                style: FlutterFlowTheme.title3,
+                                style: FlutterFlowTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                               ),
                               trailing: Icon(
                                 Icons.arrow_forward_ios,

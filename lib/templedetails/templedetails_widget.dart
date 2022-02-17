@@ -75,7 +75,7 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
           width: 50,
           height: 50,
           child: SpinKitSquareCircle(
-            color: FlutterFlowTheme.primaryColor,
+            color: FlutterFlowTheme.of(context).primaryColor,
             size: 50,
           ),
         ),
@@ -85,15 +85,15 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
           'Temple Details',
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
-            color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 16,
-          ),
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                fontSize: 16,
+              ),
         ),
         actions: [
           Padding(
@@ -113,7 +113,7 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                       width: 50,
                       height: 50,
                       child: SpinKitSquareCircle(
-                        color: FlutterFlowTheme.primaryColor,
+                        color: FlutterFlowTheme.of(context).primaryColor,
                         size: 50,
                       ),
                     ),
@@ -147,12 +147,12 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                       .contains(currentUserUid),
                   onIcon: Icon(
                     Icons.favorite,
-                    color: FlutterFlowTheme.tertiaryColor,
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
                     size: 25,
                   ),
                   offIcon: Icon(
                     Icons.favorite_border_sharp,
-                    color: FlutterFlowTheme.tertiaryColor,
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
                     size: 25,
                   ),
                 );
@@ -190,11 +190,11 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                     alignment: AlignmentDirectional(-0.81, 0.8),
                     child: Text(
                       widget.currenttemple.templename,
-                      style: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Poppins',
-                        color: FlutterFlowTheme.tertiaryColor,
-                        fontSize: 18,
-                      ),
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            color: FlutterFlowTheme.of(context).tertiaryColor,
+                            fontSize: 18,
+                          ),
                     ),
                   ),
                 ],
@@ -221,12 +221,13 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                             ListTile(
                               leading: Icon(
                                 Icons.directions,
-                                color: FlutterFlowTheme.secondaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 size: 20,
                               ),
                               title: Text(
                                 widget.currenttemple.address,
-                                style: FlutterFlowTheme.bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                               tileColor: Color(0xFFF5F5F5),
                               dense: false,
@@ -234,12 +235,13 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                             ListTile(
                               leading: FaIcon(
                                 FontAwesomeIcons.globe,
-                                color: FlutterFlowTheme.secondaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 size: 18,
                               ),
                               title: Text(
                                 widget.currenttemple.website,
-                                style: FlutterFlowTheme.bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                               tileColor: Color(0xFFF5F5F5),
                               dense: false,
@@ -247,12 +249,13 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                             ListTile(
                               leading: Icon(
                                 Icons.phone,
-                                color: FlutterFlowTheme.secondaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 size: 18,
                               ),
                               title: Text(
                                 widget.currenttemple.phoneNumber,
-                                style: FlutterFlowTheme.bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                               tileColor: Color(0xFFF5F5F5),
                               dense: false,
@@ -260,12 +263,13 @@ class _TempledetailsWidgetState extends State<TempledetailsWidget>
                             ListTile(
                               leading: Icon(
                                 Icons.location_pin,
-                                color: FlutterFlowTheme.secondaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 size: 20,
                               ),
                               title: Text(
                                 '${functions.geoDistance(widget.currenttemple.geoLocation, currentUserLocationValue)} Kilo-meters',
-                                style: FlutterFlowTheme.bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                               tileColor: Color(0xFFF5F5F5),
                               dense: false,

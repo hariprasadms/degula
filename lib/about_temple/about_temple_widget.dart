@@ -33,7 +33,7 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
               width: 50,
               height: 50,
               child: SpinKitSquareCircle(
-                color: FlutterFlowTheme.primaryColor,
+                color: FlutterFlowTheme.of(context).primaryColor,
                 size: 50,
               ),
             ),
@@ -48,12 +48,12 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
             automaticallyImplyLeading: false,
             title: Text(
               'Degula',
-              style: FlutterFlowTheme.bodyText1.override(
-                fontFamily: 'Poppins',
-                color: FlutterFlowTheme.tertiaryColor,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
+              style: FlutterFlowTheme.of(context).bodyText1.override(
+                    fontFamily: 'Poppins',
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
             actions: [],
             centerTitle: true,
@@ -73,7 +73,7 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
                         width: 50,
                         height: 50,
                         child: SpinKitSquareCircle(
-                          color: FlutterFlowTheme.primaryColor,
+                          color: FlutterFlowTheme.of(context).primaryColor,
                           size: 50,
                         ),
                       ),
@@ -97,7 +97,7 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
                               EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                           child: Text(
                             columnAboutRecord.aboutTemple,
-                            style: FlutterFlowTheme.bodyText1,
+                            style: FlutterFlowTheme.of(context).bodyText1,
                           ),
                         ),
                       ),
@@ -112,7 +112,8 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
                                 width: double.infinity,
                                 height: 3,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.primaryColor,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
                                 ),
                               ),
                             ),
@@ -132,11 +133,11 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
                           ),
                           title: Text(
                             'Share app link with friends',
-                            style: FlutterFlowTheme.title3.override(
-                              fontFamily: 'Poppins',
-                              color: Color(0xFF727070),
-                              fontSize: 15,
-                            ),
+                            style: FlutterFlowTheme.of(context).title3.override(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFF727070),
+                                  fontSize: 15,
+                                ),
                           ),
                           trailing: Icon(
                             Icons.arrow_forward_ios,
@@ -163,11 +164,12 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
                             ),
                             title: Text(
                               'Submit a volunteer request.',
-                              style: FlutterFlowTheme.title3.override(
-                                fontFamily: 'Poppins',
-                                color: Color(0xFF727070),
-                                fontSize: 16,
-                              ),
+                              style:
+                                  FlutterFlowTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF727070),
+                                        fontSize: 16,
+                                      ),
                             ),
                             trailing: Icon(
                               Icons.arrow_forward_ios,
@@ -194,11 +196,12 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
                             ),
                             title: Text(
                               'Your Temples',
-                              style: FlutterFlowTheme.title3.override(
-                                fontFamily: 'Poppins',
-                                color: Color(0xFF727070),
-                                fontSize: 15,
-                              ),
+                              style:
+                                  FlutterFlowTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF727070),
+                                        fontSize: 15,
+                                      ),
                             ),
                             trailing: Icon(
                               Icons.arrow_forward_ios,
@@ -226,11 +229,13 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
                               ),
                               title: Text(
                                 'Degula admin',
-                                style: FlutterFlowTheme.title3.override(
-                                  fontFamily: 'Poppins',
-                                  color: Color(0xFF727070),
-                                  fontSize: 15,
-                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFF727070),
+                                      fontSize: 15,
+                                    ),
                               ),
                               trailing: Icon(
                                 Icons.arrow_forward_ios,
@@ -259,11 +264,11 @@ class _AboutTempleWidgetState extends State<AboutTempleWidget> {
                           ),
                           title: Text(
                             'Logout',
-                            style: FlutterFlowTheme.title3.override(
-                              fontFamily: 'Poppins',
-                              color: Color(0xFF727070),
-                              fontSize: 16,
-                            ),
+                            style: FlutterFlowTheme.of(context).title3.override(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFF727070),
+                                  fontSize: 16,
+                                ),
                           ),
                           tileColor: Color(0xFFF5F5F5),
                           dense: false,

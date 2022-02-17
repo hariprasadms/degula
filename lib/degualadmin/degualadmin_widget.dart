@@ -21,15 +21,15 @@ class _DegualadminWidgetState extends State<DegualadminWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
           'Degula Admin',
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
-            color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 16,
-          ),
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                fontSize: 18,
+              ),
         ),
         actions: [],
         centerTitle: true,
@@ -55,10 +55,12 @@ class _DegualadminWidgetState extends State<DegualadminWidget> {
                 child: ListTile(
                   title: Text(
                     'Manage Valunteers',
-                    style: FlutterFlowTheme.title3.override(
-                      fontFamily: 'Poppins',
-                      fontSize: 18,
-                    ),
+                    style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Poppins',
+                          color: Color(0xFF656161),
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                   trailing: Icon(
                     Icons.arrow_forward_ios,
@@ -81,10 +83,12 @@ class _DegualadminWidgetState extends State<DegualadminWidget> {
                 child: ListTile(
                   title: Text(
                     'Manage Users',
-                    style: FlutterFlowTheme.title3.override(
-                      fontFamily: 'Poppins',
-                      fontSize: 18,
-                    ),
+                    style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Poppins',
+                          color: Color(0xFF656161),
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                   trailing: Icon(
                     Icons.arrow_forward_ios,

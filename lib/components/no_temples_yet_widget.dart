@@ -22,7 +22,7 @@ class _NoTemplesYetWidgetState extends State<NoTemplesYetWidget> {
           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
           child: Icon(
             Icons.hourglass_empty,
-            color: FlutterFlowTheme.secondaryColor,
+            color: FlutterFlowTheme.of(context).secondaryColor,
             size: 40,
           ),
         ),
@@ -30,10 +30,10 @@ class _NoTemplesYetWidgetState extends State<NoTemplesYetWidget> {
           alignment: AlignmentDirectional(0, 0),
           child: Text(
             'No temples to display',
-            style: FlutterFlowTheme.bodyText1.override(
-              fontFamily: 'Poppins',
-              fontSize: 16,
-            ),
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                ),
           ),
         ),
       ],

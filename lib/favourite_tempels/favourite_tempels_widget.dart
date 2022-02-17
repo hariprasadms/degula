@@ -50,15 +50,15 @@ class _FavouriteTempelsWidgetState extends State<FavouriteTempelsWidget>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.primaryColor,
-        automaticallyImplyLeading: true,
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
         title: Text(
           'ನಿಮ್ಮ ಆಯ್ಕೆಯ ದೇವಸ್ಥಾನಗಳು',
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
-            color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 16,
-          ),
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                fontSize: 16,
+              ),
         ),
         actions: [],
         centerTitle: true,
@@ -82,7 +82,7 @@ class _FavouriteTempelsWidgetState extends State<FavouriteTempelsWidget>
                     width: 50,
                     height: 50,
                     child: SpinKitSquareCircle(
-                      color: FlutterFlowTheme.primaryColor,
+                      color: FlutterFlowTheme.of(context).primaryColor,
                       size: 50,
                     ),
                   ),
@@ -150,23 +150,28 @@ class _FavouriteTempelsWidgetState extends State<FavouriteTempelsWidget>
                                         0, 3, 0, 2),
                                     child: Text(
                                       listViewTemplesRecord.templename,
-                                      style: FlutterFlowTheme.bodyText1,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1,
                                     ),
                                   ),
                                   Text(
                                     '${listViewTemplesRecord.templePlaceName}, ${listViewTemplesRecord.cityKanName}',
-                                    style: FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.primaryColor,
-                                      fontSize: 12,
-                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          fontSize: 12,
+                                        ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         5, 5, 0, 0),
                                     child: Icon(
                                       Icons.favorite,
-                                      color: FlutterFlowTheme.primaryColor,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
                                       size: 24,
                                     ),
                                   ),

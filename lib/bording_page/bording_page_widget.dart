@@ -45,7 +45,8 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                             width: 100,
                             height: 100,
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.secondaryColor,
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -75,12 +76,14 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                     children: [
                                       Text(
                                         'ದೇಗುಲ',
-                                        style: FlutterFlowTheme.title1.override(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Colors.white,
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                              fontFamily: 'Lexend Deca',
+                                              color: Colors.white,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -94,13 +97,14 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                       Expanded(
                                         child: Text(
                                           'ಕರ್ನಾಟಕ ದೇವಸ್ಥಾನಗಳ ಸಂಕ್ಷಿಪ್ತ ವಿಷಯಗಳ ಭಂಡಾರ.',
-                                          style: FlutterFlowTheme.subtitle2
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
                                               .override(
-                                            fontFamily: 'Lexend Deca',
-                                            color: Color(0x99FFFFFF),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                                fontFamily: 'Lexend Deca',
+                                                color: Color(0x99FFFFFF),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                         ),
                                       ),
                                     ],
@@ -137,7 +141,7 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                                       builder: (context) =>
                                                           NavBarPage(
                                                               initialPage:
-                                                                  'temple_feed'),
+                                                                  'temp_feed'),
                                                     ),
                                                     (r) => false,
                                                   );
@@ -207,7 +211,7 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                                 builder: (context) =>
                                                     NavBarPage(
                                                         initialPage:
-                                                            'temple_feed'),
+                                                            'temp_feed'),
                                               ),
                                               (r) => false,
                                             );
@@ -271,12 +275,14 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                     children: [
                                       Text(
                                         'ದೇಗುಲ',
-                                        style: FlutterFlowTheme.title1.override(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Colors.white,
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                              fontFamily: 'Lexend Deca',
+                                              color: Colors.white,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -290,13 +296,14 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                       Expanded(
                                         child: Text(
                                           'ಕರ್ನಾಟಕದ ದೇವಸ್ಥಾನಗಳ ವಿಷಯಗಳನ್ನ ಒಂದೆಡೆ ಸಂಗ್ರಹಸಿ, ಜನರಿಗೆ ಆ ವಿಷಯಗಳನ್ನ ಸುಲಭವಾಗಿ ತಲುಪಿಸುವ ಒಂದು ಪ್ರಯತ್ನ.',
-                                          style: FlutterFlowTheme.subtitle2
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
                                               .override(
-                                            fontFamily: 'Lexend Deca',
-                                            color: Color(0x99FFFFFF),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                                fontFamily: 'Lexend Deca',
+                                                color: Color(0x99FFFFFF),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                         ),
                                       ),
                                     ],
@@ -341,7 +348,7 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                                       builder: (context) =>
                                                           NavBarPage(
                                                               initialPage:
-                                                                  'temple_feed'),
+                                                                  'temp_feed'),
                                                     ),
                                                     (r) => false,
                                                   );
@@ -411,7 +418,7 @@ class _BordingPageWidgetState extends State<BordingPageWidget> {
                                                 builder: (context) =>
                                                     NavBarPage(
                                                         initialPage:
-                                                            'temple_feed'),
+                                                            'temp_feed'),
                                               ),
                                               (r) => false,
                                             );

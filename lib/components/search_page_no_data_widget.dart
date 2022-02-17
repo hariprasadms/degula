@@ -31,10 +31,10 @@ class _SearchPageNoDataWidgetState extends State<SearchPageNoDataWidget> {
           Text(
             'Search city  name',
             textAlign: TextAlign.center,
-            style: FlutterFlowTheme.bodyText1.override(
-              fontFamily: 'Poppins',
-              fontSize: 16,
-            ),
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                ),
           ),
         ],
       ),

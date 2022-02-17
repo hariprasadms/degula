@@ -33,10 +33,10 @@ class _SearchPageNoDataTemplesWidgetState
           Text(
             'Search temple name or place name',
             textAlign: TextAlign.center,
-            style: FlutterFlowTheme.bodyText1.override(
-              fontFamily: 'Poppins',
-              fontSize: 16,
-            ),
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                ),
           ),
         ],
       ),

@@ -48,6 +48,14 @@ abstract class TempvalunteersRecord
   bool get isInPending;
 
   @nullable
+  @BuiltValueField(wireName: 'temple_ref')
+  DocumentReference get templeRef;
+
+  @nullable
+  @BuiltValueField(wireName: 'temple_city')
+  String get templeCity;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -61,7 +69,8 @@ abstract class TempvalunteersRecord
     ..valunteerPhoto = ''
     ..isApproved = false
     ..isRejected = false
-    ..isInPending = false;
+    ..isInPending = false
+    ..templeCity = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('tempvalunteers');
@@ -96,6 +105,8 @@ Map<String, dynamic> createTempvalunteersRecordData({
   bool isApproved,
   bool isRejected,
   bool isInPending,
+  DocumentReference templeRef,
+  String templeCity,
 }) =>
     serializers.toFirestore(
         TempvalunteersRecord.serializer,
@@ -109,4 +120,6 @@ Map<String, dynamic> createTempvalunteersRecordData({
           ..valunteerPhoto = valunteerPhoto
           ..isApproved = isApproved
           ..isRejected = isRejected
-          ..isInPending = isInPending));
+          ..isInPending = isInPending
+          ..templeRef = templeRef
+          ..templeCity = templeCity));

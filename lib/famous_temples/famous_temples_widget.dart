@@ -68,15 +68,15 @@ class _FamousTemplesWidgetState extends State<FamousTemplesWidget>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
-          'ಪ್ರಸಿದ್ಧ ದೇವಾಲಯಗಳು',
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
-            color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 16,
-          ),
+          'Famous Temples',
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                fontSize: 18,
+              ),
         ),
         actions: [],
         centerTitle: true,
@@ -100,7 +100,7 @@ class _FamousTemplesWidgetState extends State<FamousTemplesWidget>
                     width: 50,
                     height: 50,
                     child: SpinKitSquareCircle(
-                      color: FlutterFlowTheme.primaryColor,
+                      color: FlutterFlowTheme.of(context).primaryColor,
                       size: 50,
                     ),
                   ),
@@ -170,16 +170,20 @@ class _FamousTemplesWidgetState extends State<FamousTemplesWidget>
                                         0, 3, 0, 2),
                                     child: Text(
                                       listViewTemplesRecord.templename,
-                                      style: FlutterFlowTheme.bodyText1,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1,
                                     ),
                                   ),
                                   Text(
                                     '${listViewTemplesRecord.templePlaceName}, ${listViewTemplesRecord.cityKanName}',
-                                    style: FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.secondaryColor,
-                                      fontSize: 12,
-                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryColor,
+                                          fontSize: 12,
+                                        ),
                                   ),
                                   if (listViewTemplesRecord.favBy
                                           .toList()
@@ -190,7 +194,8 @@ class _FamousTemplesWidgetState extends State<FamousTemplesWidget>
                                           5, 5, 0, 0),
                                       child: Icon(
                                         Icons.favorite,
-                                        color: FlutterFlowTheme.primaryColor,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
                                         size: 24,
                                       ),
                                     ),

@@ -50,15 +50,15 @@ class _CitylistWidgetState extends State<CitylistWidget>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
           'Karnataka Districts',
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
-            color: FlutterFlowTheme.tertiaryColor,
-            fontSize: 18,
-          ),
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                fontSize: 18,
+              ),
         ),
         actions: [
           Padding(
@@ -74,7 +74,7 @@ class _CitylistWidgetState extends State<CitylistWidget>
               },
               child: Icon(
                 Icons.search,
-                color: FlutterFlowTheme.tertiaryColor,
+                color: FlutterFlowTheme.of(context).tertiaryColor,
                 size: 24,
               ),
             ),
@@ -95,7 +95,7 @@ class _CitylistWidgetState extends State<CitylistWidget>
                 width: 50,
                 height: 50,
                 child: SpinKitSquareCircle(
-                  color: FlutterFlowTheme.primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryColor,
                   size: 50,
                 ),
               ),
@@ -148,11 +148,12 @@ class _CitylistWidgetState extends State<CitylistWidget>
                           alignment: AlignmentDirectional(-0.74, 0.76),
                           child: Text(
                             listViewCitiesRecord.cityname,
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: Color(0xFFFAFAFA),
-                              fontSize: 20,
-                            ),
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFFFAFAFA),
+                                      fontSize: 20,
+                                    ),
                           ),
                         ),
                       ],
