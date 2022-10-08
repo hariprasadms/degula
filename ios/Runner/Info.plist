@@ -28,7 +28,7 @@
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.googleusercontent.apps.212031999765-qq61bkfscsrbuq41dm7tqc0q8edg7pkn</string>
+                <string>com.googleusercontent.apps.212031999765-2hdl0n1mrtdn6a037e8p0estgnvk7g2j</string>
                 
             </array>
         </dict>
@@ -40,7 +40,7 @@
         <string>degula</string>
         <key>CFBundleURLSchemes</key>
         <array>
-        <string>com.harimogalli.degula</string>
+        <string>com.mogalli.degulagalu</string>
         </array>
         </dict>
     </array>

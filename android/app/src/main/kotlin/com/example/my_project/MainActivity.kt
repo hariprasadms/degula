@@ -1,4 +1,4 @@
-package com.harimogalli.degula
+package com.mogalli.degulagalu
 
 import io.flutter.embedding.android.FlutterActivity
 

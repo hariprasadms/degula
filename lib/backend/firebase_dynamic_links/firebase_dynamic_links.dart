@@ -5,7 +5,7 @@ import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
 const _kDynamicLinksUrl = 'https://test.page.link';
-const _kAppId = 'com.harimogalli.degula';
+const _kAppId = 'com.mogalli.degulagalu';
 
 Future<String> generateCurrentPageLink(
   BuildContext context, {

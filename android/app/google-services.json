@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "212031999765-epbahgi0rsjcq0dtt9hedjirdafd7bnu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.harimogalli.degula",
+            "certificate_hash": "765f6c6667e8d1dc31ff855abc629a28dfea1a37"
+          }
+        },
+        {
           "client_id": "212031999765-rdausuhgdr8r45nnvco5a5r38psjskdn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -39,10 +47,54 @@
               "client_type": 3
             },
             {
-              "client_id": "212031999765-qq61bkfscsrbuq41dm7tqc0q8edg7pkn.apps.googleusercontent.com",
+              "client_id": "212031999765-2hdl0n1mrtdn6a037e8p0estgnvk7g2j.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.harimogalli.degula"
+                "bundle_id": "com.mogalli.degulagalu"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212031999765:android:39bbab4366c70ef502231c",
+        "android_client_info": {
+          "package_name": "com.mogalli.degulagalu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212031999765-737c4p6dgr67l0umj9f38rulttg648lb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mogalli.degulagalu",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "212031999765-g5knihbac84v2ci457s5cor1079li98k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4UGR6u86w-tgtK-Z2_N5YlRYhHRwabmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212031999765-g5knihbac84v2ci457s5cor1079li98k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "212031999765-2hdl0n1mrtdn6a037e8p0estgnvk7g2j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mogalli.degulagalu"
               }
             }
           ]
