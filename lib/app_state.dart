@@ -19,17 +19,32 @@ class FFAppState {
     _templeRefList = prefs.getString('ff_templeRefList')?.ref ?? _templeRefList;
   }
 
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
 
-  DocumentReference _templeRefList;
-  DocumentReference get templeRefList => _templeRefList;
-  set templeRefList(DocumentReference _value) {
+  DocumentReference? _templeRefList;
+  DocumentReference? get templeRefList => _templeRefList;
+  set templeRefList(DocumentReference? _value) {
+    if (_value == null) {
+      return;
+    }
     _templeRefList = _value;
     prefs.setString('ff_templeRefList', _value.path);
   }
+
+  String selectedtemple = '';
+
+  String selectedcity = '';
+
+  DocumentReference? selectedtempref;
+
+  List<String> templenamelist = [];
+
+  String selectedtempimg = '';
+
+  List<String> citynamelist = [];
 }
 
-LatLng _latLngFromString(String val) {
+LatLng? _latLngFromString(String? val) {
   if (val == null) {
     return null;
   }

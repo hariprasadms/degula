@@ -1,12 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
+import '../components/selecttemple_bottom_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
-import '../your_temples/your_temples_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +13,20 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class VolunteerDetailsWidget extends StatefulWidget {
-  const VolunteerDetailsWidget({Key key}) : super(key: key);
+  const VolunteerDetailsWidget({Key? key}) : super(key: key);
 
   @override
   _VolunteerDetailsWidgetState createState() => _VolunteerDetailsWidgetState();
 }
 
 class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
-  String dropDownValue;
-  TextEditingController textController1;
-  TextEditingController textController2;
+  bool isMediaUploading = false;
   String uploadedFileUrl = '';
+
+  String? tmp;
+  TextEditingController? textController1;
+  TextEditingController? textController2;
+  TempvalunteersRecord? createdTempValDetails;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -33,29 +35,24 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
     super.initState();
     textController1 = TextEditingController();
     textController2 = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    textController1?.dispose();
+    textController2?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<TemplesRecord>>(
-      stream: queryTemplesRecord(),
-      builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
-        if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 50,
-              height: 50,
-              child: SpinKitSquareCircle(
-                color: FlutterFlowTheme.of(context).primaryColor,
-                size: 50,
-              ),
-            ),
-          );
-        }
-        List<TemplesRecord> volunteerDetailsTemplesRecordList = snapshot.data;
-        return Scaffold(
+    return Title(
+        title: 'volunteer_details',
+        color: FlutterFlowTheme.of(context).primaryColor,
+        child: Scaffold(
           key: scaffoldKey,
+          backgroundColor: Color(0xFFF5F5F5),
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primaryColor,
             automaticallyImplyLeading: true,
@@ -71,7 +68,6 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
             centerTitle: true,
             elevation: 4,
           ),
-          backgroundColor: Color(0xFFF5F5F5),
           body: SafeArea(
             child: Form(
               key: formKey,
@@ -100,53 +96,60 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                     color: Color(0xFFE6E6E6),
                                   ),
                                 ),
-                                child: StreamBuilder<List<TemplesRecord>>(
-                                  stream: queryTemplesRecord(),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: SpinKitSquareCircle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 50,
+                                child: InkWell(
+                                  onTap: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context).viewInsets,
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.9,
+                                            child: SelecttempleBottomWidget(),
                                           ),
-                                        ),
-                                      );
-                                    }
-                                    List<TemplesRecord>
-                                        dropDownTemplesRecordList =
-                                        snapshot.data;
-                                    return FlutterFlowDropDown(
-                                      options: dropDownTemplesRecordList
-                                          .map((e) => e.templename)
-                                          .toList()
-                                          .toList(),
-                                      onChanged: (val) =>
-                                          setState(() => dropDownValue = val),
-                                      width: 180,
-                                      height: 50,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            color: Color(0xFF8B97A2),
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                      hintText: 'Select temple name...',
-                                      fillColor: Colors.white,
-                                      elevation: 2,
-                                      borderColor: Colors.transparent,
-                                      borderWidth: 0,
-                                      borderRadius: 0,
-                                      margin: EdgeInsetsDirectional.fromSTEB(
-                                          12, 4, 12, 4),
-                                      hidesUnderline: true,
-                                    );
+                                        );
+                                      },
+                                    ).then(
+                                        (value) => setState(() => tmp = value));
+
+                                    setState(() {});
                                   },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 0),
+                                        child: Text(
+                                          valueOrDefault<String>(
+                                            tmp,
+                                            'Select a temple',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 10, 0),
+                                        child: Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.black,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -173,12 +176,12 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       16, 0, 0, 0),
                                   child: TextFormField(
+                                    controller: textController1,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'textController1',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
-                                    controller: textController1,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelText: ' Rason to be volunteer ',
@@ -202,19 +205,40 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                           topRight: Radius.circular(4.0),
                                         ),
                                       ),
-                                      suffixIcon: textController1
-                                              .text.isNotEmpty
-                                          ? InkWell(
-                                              onTap: () => setState(
-                                                () => textController1.clear(),
-                                              ),
-                                              child: Icon(
-                                                Icons.clear,
-                                                color: Color(0xFF656161),
-                                                size: 22,
-                                              ),
-                                            )
-                                          : null,
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      suffixIcon:
+                                          textController1!.text.isNotEmpty
+                                              ? InkWell(
+                                                  onTap: () async {
+                                                    textController1?.clear();
+                                                    setState(() {});
+                                                  },
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    color: Color(0xFF656161),
+                                                    size: 22,
+                                                  ),
+                                                )
+                                              : null,
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText2
@@ -225,7 +249,7 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                         ),
                                     keyboardType: TextInputType.streetAddress,
                                     validator: (val) {
-                                      if (val.isEmpty) {
+                                      if (val == null || val.isEmpty) {
                                         return 'This field is required';
                                       }
 
@@ -258,12 +282,12 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       16, 0, 0, 0),
                                   child: TextFormField(
+                                    controller: textController2,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'textController2',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
-                                    controller: textController2,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelText: ' Your phone number',
@@ -287,19 +311,40 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                           topRight: Radius.circular(4.0),
                                         ),
                                       ),
-                                      suffixIcon: textController2
-                                              .text.isNotEmpty
-                                          ? InkWell(
-                                              onTap: () => setState(
-                                                () => textController2.clear(),
-                                              ),
-                                              child: Icon(
-                                                Icons.clear,
-                                                color: Color(0xFF656161),
-                                                size: 22,
-                                              ),
-                                            )
-                                          : null,
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      suffixIcon:
+                                          textController2!.text.isNotEmpty
+                                              ? InkWell(
+                                                  onTap: () async {
+                                                    textController2?.clear();
+                                                    setState(() {});
+                                                  },
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    color: Color(0xFF656161),
+                                                    size: 22,
+                                                  ),
+                                                )
+                                              : null,
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText2
@@ -310,7 +355,7 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                         ),
                                     keyboardType: TextInputType.multiline,
                                     validator: (val) {
-                                      if (val.isEmpty) {
+                                      if (val == null || val.isEmpty) {
                                         return 'This field is required';
                                       }
 
@@ -371,31 +416,42 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                           allowPhoto: true,
                                         );
                                         if (selectedMedia != null &&
-                                            validateFileFormat(
-                                                selectedMedia.storagePath,
-                                                context)) {
-                                          showUploadMessage(
-                                            context,
-                                            'Uploading file...',
-                                            showLoading: true,
-                                          );
-                                          final downloadUrl = await uploadData(
-                                              selectedMedia.storagePath,
-                                              selectedMedia.bytes);
-                                          ScaffoldMessenger.of(context)
-                                              .hideCurrentSnackBar();
-                                          if (downloadUrl != null) {
-                                            setState(() =>
-                                                uploadedFileUrl = downloadUrl);
+                                            selectedMedia.every((m) =>
+                                                validateFileFormat(
+                                                    m.storagePath, context))) {
+                                          setState(
+                                              () => isMediaUploading = true);
+                                          var downloadUrls = <String>[];
+                                          try {
                                             showUploadMessage(
                                               context,
-                                              'Success!',
+                                              'Uploading file...',
+                                              showLoading: true,
                                             );
+                                            downloadUrls = (await Future.wait(
+                                              selectedMedia.map(
+                                                (m) async => await uploadData(
+                                                    m.storagePath, m.bytes),
+                                              ),
+                                            ))
+                                                .where((u) => u != null)
+                                                .map((u) => u!)
+                                                .toList();
+                                          } finally {
+                                            ScaffoldMessenger.of(context)
+                                                .hideCurrentSnackBar();
+                                            isMediaUploading = false;
+                                          }
+                                          if (downloadUrls.length ==
+                                              selectedMedia.length) {
+                                            setState(() => uploadedFileUrl =
+                                                downloadUrls.first);
+                                            showUploadMessage(
+                                                context, 'Success!');
                                           } else {
-                                            showUploadMessage(
-                                              context,
-                                              'Failed to upload media',
-                                            );
+                                            setState(() {});
+                                            showUploadMessage(context,
+                                                'Failed to upload media');
                                             return;
                                           }
                                         }
@@ -428,29 +484,14 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            if (!formKey.currentState.validate()) {
+                            var _shouldSetState = false;
+                            if (formKey.currentState == null ||
+                                !formKey.currentState!.validate()) {
                               return;
                             }
 
-                            if (dropDownValue == null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Temple name is required',
-                                    style: TextStyle(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                ),
-                              );
-                              return;
-                            }
-
-                            if (uploadedFileUrl == null) {
+                            if (uploadedFileUrl == null ||
+                                uploadedFileUrl.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -468,8 +509,10 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                               return;
                             }
 
-                            if (currentUserDocument?.valunteerTempNames
-                                .contains(dropDownValue)) {
+                            if ((currentUserDocument?.valunteerTempNames
+                                        ?.toList() ??
+                                    [])
+                                .contains(FFAppState().selectedtemple)) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -483,39 +526,52 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                                   backgroundColor: Color(0xFFF06427),
                                 ),
                               );
-                            }
-                            if (!(currentUserDocument?.valunteerTempNames
-                                .contains(dropDownValue))) {
+                              if (_shouldSetState) setState(() {});
+                              return;
+                            } else {
                               final userUpdateData = {
                                 'valunteer_temp_names':
-                                    FieldValue.arrayUnion([dropDownValue]),
+                                    FieldValue.arrayUnion([tmp]),
                               };
-                              await currentUserReference.update(userUpdateData);
-                            } else {
-                              return;
+                              await currentUserReference!
+                                  .update(userUpdateData);
                             }
+
                             final tempvalunteersCreateData =
                                 createTempvalunteersRecordData(
-                              templename: dropDownValue,
                               valunteerName: currentUserDisplayName,
                               valunteerUid: currentUserUid,
-                              valunteerPhone: textController2.text,
+                              valunteerPhone: textController2!.text,
                               valunteerEmail: currentUserEmail,
-                              valunteerReason: textController1.text,
+                              valunteerReason: textController1!.text,
                               valunteerPhoto: uploadedFileUrl,
                               isApproved: false,
                               isRejected: false,
                               isInPending: true,
+                              templeRef: FFAppState().selectedtempref,
+                              templename: FFAppState().selectedtemple,
                             );
-                            await TempvalunteersRecord.collection
-                                .doc()
+                            var tempvalunteersRecordReference =
+                                TempvalunteersRecord.collection.doc();
+                            await tempvalunteersRecordReference
                                 .set(tempvalunteersCreateData);
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => YourTemplesWidget(),
-                              ),
+                            createdTempValDetails =
+                                TempvalunteersRecord.getDocumentFromData(
+                                    tempvalunteersCreateData,
+                                    tempvalunteersRecordReference);
+                            _shouldSetState = true;
+
+                            final tempvalunteersUpdateData =
+                                createTempvalunteersRecordData(
+                              templeCity: FFAppState().selectedcity,
+                              tempImg: FFAppState().selectedtempimg,
                             );
+                            await createdTempValDetails!.reference
+                                .update(tempvalunteersUpdateData);
+
+                            context.pushNamed('your_temples');
+
+                            if (_shouldSetState) setState(() {});
                           },
                           text: 'Submit',
                           options: FFButtonOptions(
@@ -531,7 +587,6 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
                               color: Colors.transparent,
                               width: 1,
                             ),
-                            borderRadius: 0,
                           ),
                         ),
                       ),
@@ -541,8 +596,6 @@ class _VolunteerDetailsWidgetState extends State<VolunteerDetailsWidget> {
               ),
             ),
           ),
-        );
-      },
-    );
+        ));
   }
 }

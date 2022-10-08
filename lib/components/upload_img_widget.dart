@@ -6,17 +6,24 @@ import 'package:google_fonts/google_fonts.dart';
 
 class UploadImgWidget extends StatefulWidget {
   const UploadImgWidget({
-    Key key,
+    Key? key,
     this.image,
   }) : super(key: key);
 
-  final String image;
+  final String? image;
 
   @override
   _UploadImgWidgetState createState() => _UploadImgWidgetState();
 }
 
 class _UploadImgWidgetState extends State<UploadImgWidget> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

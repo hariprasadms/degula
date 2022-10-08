@@ -5,13 +5,20 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SearchPageNoDataWidget extends StatefulWidget {
-  const SearchPageNoDataWidget({Key key}) : super(key: key);
+  const SearchPageNoDataWidget({Key? key}) : super(key: key);
 
   @override
   _SearchPageNoDataWidgetState createState() => _SearchPageNoDataWidgetState();
 }
 
 class _SearchPageNoDataWidgetState extends State<SearchPageNoDataWidget> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Align(

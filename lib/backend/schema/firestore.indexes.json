@@ -5,24 +5,26 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "favBy",
-          "arrayConfig": "CONTAINS"
-        },
-        {
           "fieldPath": "publishe",
           "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "favBy",
+          "arrayConfig": "CONTAINS"
         }
       ]
-    }
-  ],
-  "fieldOverrides": [
+    },
     {
-      "collectionGroup": "fcm_tokens",
-      "fieldPath": "fcm_token",
-      "indexes": [
+      "collectionGroup": "temple_posts",
+      "queryScope": "COLLECTION",
+      "fields": [
         {
-          "order": "ASCENDING",
-          "queryScope": "COLLECTION_GROUP"
+          "fieldPath": "cityname",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_date_time",
+          "order": "DESCENDING"
         }
       ]
     }

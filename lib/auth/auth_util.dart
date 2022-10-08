@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,36 +14,62 @@ export 'anonymous_auth.dart';
 export 'apple_auth.dart';
 export 'email_auth.dart';
 export 'google_auth.dart';
+export 'jwt_token_auth.dart';
 
 /// Tries to sign in or create an account using Firebase Auth.
 /// Returns the User object if sign in was successful.
-Future<User> signInOrCreateAccount(
-    BuildContext context, Future<UserCredential> Function() signInFunc) async {
+Future<User?> signInOrCreateAccount(
+  BuildContext context,
+  Future<UserCredential?> Function() signInFunc,
+  String authProvider,
+) async {
   try {
     final userCredential = await signInFunc();
-    await maybeCreateUser(userCredential.user);
-    return userCredential.user;
+    if (userCredential?.user != null) {
+      await maybeCreateUser(userCredential!.user!);
+    }
+    return userCredential?.user;
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error: ${e.message}')),
+      SnackBar(content: Text('Error: ${e.message!}')),
     );
     return null;
   }
 }
 
 Future signOut() {
-  _currentJwtToken = '';
-  FirebaseAuth.instance.signOut();
+  updateUserJwtTimer();
+  return FirebaseAuth.instance.signOut();
 }
 
-Future resetPassword({String email, BuildContext context}) async {
+Future deleteUser(BuildContext context) async {
+  try {
+    if (currentUser?.user == null) {
+      print('Error: delete user attempted with no logged in user!');
+      return;
+    }
+    await currentUser?.user?.delete();
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'requires-recent-login') {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+                'Too long since most recent sign in. Sign in again before deleting your account.')),
+      );
+    }
+  }
+}
+
+Future resetPassword(
+    {required String email, required BuildContext context}) async {
   try {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error: ${e.message}')),
+      SnackBar(content: Text('Error: ${e.message!}')),
     );
     return null;
   }
@@ -53,13 +81,10 @@ Future resetPassword({String email, BuildContext context}) async {
 Future sendEmailVerification() async =>
     currentUser?.user?.sendEmailVerification();
 
-String _currentJwtToken = '';
-
 String get currentUserEmail =>
     currentUserDocument?.email ?? currentUser?.user?.email ?? '';
 
-String get currentUserUid =>
-    currentUserDocument?.uid ?? currentUser?.user?.uid ?? '';
+String get currentUserUid => currentUser?.user?.uid ?? '';
 
 String get currentUserDisplayName =>
     currentUserDocument?.displayName ?? currentUser?.user?.displayName ?? '';
@@ -75,23 +100,45 @@ String get currentJwtToken => _currentJwtToken ?? '';
 bool get currentUserEmailVerified {
   // Reloads the user when checking in order to get the most up to date
   // email verified status.
-  if (currentUser?.user != null && !currentUser.user.emailVerified) {
-    currentUser.user
+  if (currentUser?.user != null && !currentUser!.user!.emailVerified) {
+    currentUser!.user!
         .reload()
-        .then((_) => currentUser.user = FirebaseAuth.instance.currentUser);
+        .then((_) => currentUser!.user = FirebaseAuth.instance.currentUser);
   }
   return currentUser?.user?.emailVerified ?? false;
 }
 
+/// Create a timer that periodically gets the current user's JWT Token,
+/// since Firebase generates a new token every hour.
+Timer? _jwtTimer;
+String? _currentJwtToken;
+Future updateUserJwtTimer([User? user]) async {
+  _jwtTimer?.cancel();
+  // Clear the JWT token and return if the user is not logged in.
+  if (user == null) {
+    _currentJwtToken = null;
+    return;
+  }
+  // Update the user's JWT token immediately and then every hour
+  // based on the [currentUser].
+  try {
+    _currentJwtToken = await user.getIdToken();
+    _jwtTimer = Timer.periodic(
+      Duration(hours: 1),
+      (_) async => _currentJwtToken = await currentUser?.user?.getIdToken(),
+    );
+  } catch (_) {}
+}
+
 // Set when using phone verification (after phone number is provided).
-String _phoneAuthVerificationCode;
+String? _phoneAuthVerificationCode;
 // Set when using phone sign in in web mode (ignored otherwise).
-ConfirmationResult _webPhoneAuthConfirmationResult;
+ConfirmationResult? _webPhoneAuthConfirmationResult;
 
 Future beginPhoneAuth({
-  BuildContext context,
-  String phoneNumber,
-  VoidCallback onCodeSent,
+  required BuildContext context,
+  required String phoneNumber,
+  required VoidCallback onCodeSent,
 }) async {
   if (kIsWeb) {
     _webPhoneAuthConfirmationResult =
@@ -119,7 +166,7 @@ Future beginPhoneAuth({
     },
     verificationFailed: (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error: ${e.message}'),
+        content: Text('Error: ${e.message!}'),
       ));
     },
     codeSent: (verificationId, _) {
@@ -131,44 +178,45 @@ Future beginPhoneAuth({
 }
 
 Future verifySmsCode({
-  BuildContext context,
-  String smsCode,
+  required BuildContext context,
+  required String smsCode,
 }) async {
   if (kIsWeb) {
     return signInOrCreateAccount(
-        context, () => _webPhoneAuthConfirmationResult.confirm(smsCode));
+      context,
+      () => _webPhoneAuthConfirmationResult!.confirm(smsCode),
+      'PHONE',
+    );
   } else {
     final authCredential = PhoneAuthProvider.credential(
-        verificationId: _phoneAuthVerificationCode, smsCode: smsCode);
+        verificationId: _phoneAuthVerificationCode!, smsCode: smsCode);
     return signInOrCreateAccount(
       context,
       () => FirebaseAuth.instance.signInWithCredential(authCredential),
+      'PHONE',
     );
   }
 }
 
-DocumentReference get currentUserReference => currentUser?.user != null
-    ? UserRecord.collection.doc(currentUser.user.uid)
+DocumentReference? get currentUserReference => currentUser?.user != null
+    ? UserRecord.collection.doc(currentUser!.user!.uid)
     : null;
 
-UserRecord currentUserDocument;
+UserRecord? currentUserDocument;
 final authenticatedUserStream = FirebaseAuth.instance
     .authStateChanges()
-    .map<String>((user) {
-      // Store jwt token on user update.
-      () async {
-        _currentJwtToken = await user?.getIdToken();
-      }();
-      return user?.uid ?? '';
-    })
-    .switchMap((uid) => queryUserRecord(
-        queryBuilder: (user) => user.where('uid', isEqualTo: uid),
-        singleRecord: true))
-    .map((users) => currentUserDocument = users.isNotEmpty ? users.first : null)
+    .map<String>((user) => user?.uid ?? '')
+    .switchMap(
+      (uid) => uid.isEmpty
+          ? Stream.value(null)
+          : UserRecord.getDocument(UserRecord.collection.doc(uid))
+              .handleError((_) {}),
+    )
+    .map((user) => currentUserDocument = user)
     .asBroadcastStream();
 
 class AuthUserStreamWidget extends StatelessWidget {
-  const AuthUserStreamWidget({Key key, this.child}) : super(key: key);
+  const AuthUserStreamWidget({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 

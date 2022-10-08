@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:from_css_color/from_css_color.dart';
+
 import 'index.dart';
 import 'serializers.dart';
 import 'package:built_value/built_value.dart';
@@ -10,51 +12,37 @@ abstract class TemplesRecord
     implements Built<TemplesRecord, TemplesRecordBuilder> {
   static Serializer<TemplesRecord> get serializer => _$templesRecordSerializer;
 
-  @nullable
-  String get templename;
+  String? get templename;
 
-  @nullable
-  String get cityname;
+  String? get cityname;
 
-  @nullable
-  String get address;
+  String? get address;
 
-  @nullable
-  String get story;
+  String? get story;
 
-  @nullable
-  bool get publishe;
+  bool? get publishe;
 
-  @nullable
-  BuiltList<String> get tempDetailsImg;
+  BuiltList<String>? get tempDetailsImg;
 
-  @nullable
-  LatLng get geoLocation;
+  LatLng? get geoLocation;
 
-  @nullable
-  String get templePlaceName;
+  String? get templePlaceName;
 
-  @nullable
-  String get website;
+  String? get website;
 
-  @nullable
-  String get phoneNumber;
+  String? get phoneNumber;
 
-  @nullable
-  BuiltList<String> get favBy;
+  BuiltList<String>? get favBy;
 
-  @nullable
-  String get cityKanName;
+  String? get cityKanName;
 
-  @nullable
-  String get templeEngName;
+  String? get templeEngName;
 
-  @nullable
-  bool get famous;
+  bool? get famous;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(TemplesRecordBuilder builder) => builder
     ..templename = ''
@@ -76,11 +64,11 @@ abstract class TemplesRecord
 
   static Stream<TemplesRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<TemplesRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static TemplesRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
       TemplesRecord(
@@ -103,14 +91,14 @@ abstract class TemplesRecord
           ..cityKanName = snapshot.data['cityKanName']
           ..templeEngName = snapshot.data['templeEngName']
           ..famous = snapshot.data['famous']
-          ..reference = TemplesRecord.collection.doc(snapshot.objectID),
+          ..ffRef = TemplesRecord.collection.doc(snapshot.objectID),
       );
 
   static Future<List<TemplesRecord>> search(
-          {String term,
-          FutureOr<LatLng> location,
-          int maxResults,
-          double searchRadiusMeters}) =>
+          {String? term,
+          FutureOr<LatLng>? location,
+          int? maxResults,
+          double? searchRadiusMeters}) =>
       FFAlgoliaManager.instance
           .algoliaQuery(
             index: 'temples',
@@ -128,37 +116,43 @@ abstract class TemplesRecord
   static TemplesRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createTemplesRecordData({
-  String templename,
-  String cityname,
-  String address,
-  String story,
-  bool publishe,
-  LatLng geoLocation,
-  String templePlaceName,
-  String website,
-  String phoneNumber,
-  String cityKanName,
-  String templeEngName,
-  bool famous,
-}) =>
-    serializers.toFirestore(
-        TemplesRecord.serializer,
-        TemplesRecord((t) => t
-          ..templename = templename
-          ..cityname = cityname
-          ..address = address
-          ..story = story
-          ..publishe = publishe
-          ..tempDetailsImg = null
-          ..geoLocation = geoLocation
-          ..templePlaceName = templePlaceName
-          ..website = website
-          ..phoneNumber = phoneNumber
-          ..favBy = null
-          ..cityKanName = cityKanName
-          ..templeEngName = templeEngName
-          ..famous = famous));
+  String? templename,
+  String? cityname,
+  String? address,
+  String? story,
+  bool? publishe,
+  LatLng? geoLocation,
+  String? templePlaceName,
+  String? website,
+  String? phoneNumber,
+  String? cityKanName,
+  String? templeEngName,
+  bool? famous,
+}) {
+  final firestoreData = serializers.toFirestore(
+    TemplesRecord.serializer,
+    TemplesRecord(
+      (t) => t
+        ..templename = templename
+        ..cityname = cityname
+        ..address = address
+        ..story = story
+        ..publishe = publishe
+        ..tempDetailsImg = null
+        ..geoLocation = geoLocation
+        ..templePlaceName = templePlaceName
+        ..website = website
+        ..phoneNumber = phoneNumber
+        ..favBy = null
+        ..cityKanName = cityKanName
+        ..templeEngName = templeEngName
+        ..famous = famous,
+    ),
+  );
+
+  return firestoreData;
+}

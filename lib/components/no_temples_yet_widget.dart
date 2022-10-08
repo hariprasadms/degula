@@ -5,13 +5,20 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NoTemplesYetWidget extends StatefulWidget {
-  const NoTemplesYetWidget({Key key}) : super(key: key);
+  const NoTemplesYetWidget({Key? key}) : super(key: key);
 
   @override
   _NoTemplesYetWidgetState createState() => _NoTemplesYetWidgetState();
 }
 
 class _NoTemplesYetWidgetState extends State<NoTemplesYetWidget> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:from_css_color/from_css_color.dart';
+
 import 'index.dart';
 import 'serializers.dart';
 import 'package:built_value/built_value.dart';
@@ -10,21 +12,17 @@ abstract class CitiesRecord
     implements Built<CitiesRecord, CitiesRecordBuilder> {
   static Serializer<CitiesRecord> get serializer => _$citiesRecordSerializer;
 
-  @nullable
-  String get cityname;
+  String? get cityname;
 
-  @nullable
-  String get englishName;
+  String? get englishName;
 
-  @nullable
-  bool get publishe;
+  bool? get publishe;
 
-  @nullable
-  BuiltList<String> get cityphoto;
+  BuiltList<String>? get cityphoto;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(CitiesRecordBuilder builder) => builder
     ..cityname = ''
@@ -37,11 +35,11 @@ abstract class CitiesRecord
 
   static Stream<CitiesRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<CitiesRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static CitiesRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
       CitiesRecord(
@@ -50,14 +48,14 @@ abstract class CitiesRecord
           ..englishName = snapshot.data['englishName']
           ..publishe = snapshot.data['publishe']
           ..cityphoto = safeGet(() => ListBuilder(snapshot.data['cityphoto']))
-          ..reference = CitiesRecord.collection.doc(snapshot.objectID),
+          ..ffRef = CitiesRecord.collection.doc(snapshot.objectID),
       );
 
   static Future<List<CitiesRecord>> search(
-          {String term,
-          FutureOr<LatLng> location,
-          int maxResults,
-          double searchRadiusMeters}) =>
+          {String? term,
+          FutureOr<LatLng>? location,
+          int? maxResults,
+          double? searchRadiusMeters}) =>
       FFAlgoliaManager.instance
           .algoliaQuery(
             index: 'cities',
@@ -75,18 +73,24 @@ abstract class CitiesRecord
   static CitiesRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createCitiesRecordData({
-  String cityname,
-  String englishName,
-  bool publishe,
-}) =>
-    serializers.toFirestore(
-        CitiesRecord.serializer,
-        CitiesRecord((c) => c
-          ..cityname = cityname
-          ..englishName = englishName
-          ..publishe = publishe
-          ..cityphoto = null));
+  String? cityname,
+  String? englishName,
+  bool? publishe,
+}) {
+  final firestoreData = serializers.toFirestore(
+    CitiesRecord.serializer,
+    CitiesRecord(
+      (c) => c
+        ..cityname = cityname
+        ..englishName = englishName
+        ..publishe = publishe
+        ..cityphoto = null,
+    ),
+  );
+
+  return firestoreData;
+}

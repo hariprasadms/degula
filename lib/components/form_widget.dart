@@ -5,19 +5,26 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FormWidget extends StatefulWidget {
-  const FormWidget({Key key}) : super(key: key);
+  const FormWidget({Key? key}) : super(key: key);
 
   @override
   _FormWidgetState createState() => _FormWidgetState();
 }
 
 class _FormWidgetState extends State<FormWidget> {
-  TextEditingController textController;
+  TextEditingController? textController;
 
   @override
   void initState() {
     super.initState();
     textController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,6 +55,26 @@ class _FormWidgetState extends State<FormWidget> {
                 ),
               ),
               focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0x00000000),
+                  width: 1,
+                ),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(4.0),
+                  topRight: Radius.circular(4.0),
+                ),
+              ),
+              errorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0x00000000),
+                  width: 1,
+                ),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(4.0),
+                  topRight: Radius.circular(4.0),
+                ),
+              ),
+              focusedErrorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                   color: Color(0x00000000),
                   width: 1,

@@ -23,10 +23,24 @@
   <meta name="apple-mobile-web-app-title" content="Degula">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  
 
-  <title>Degula</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="degula_app_icon_(1).png" />
+
+  <!-- Open Graph & SEO tags -->
+  <meta property="og:title" content="degula" />
+  <meta property="og:description" content="Built with FlutterFlow." />
+  <meta property="og:image" content="degula_app_icon_(1).png" /> 
+  <meta name="twitter:title" content="degula" />
+  <meta name="twitter:description" content="Built with FlutterFlow." />
+  <meta name="twitter:image" content="degula_app_icon_(1).png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <title> degula </title>
+  <meta name="description" content="Built with FlutterFlow." />
+    
+
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -40,26 +54,28 @@
       });
     }
   </script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-functions.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  
+  
 
   <script>
     const firebaseConfig = {
     apiKey: "AIzaSyBosPQpuLiTxy2EYTLEYOphIprdW1Ji1bg",
-    authDomain: "degula.firebaseapp.com",
-    projectId: "degula",
-    storageBucket: "degula.appspot.com",
-    messagingSenderId: "212031999765",
-    appId: "1:212031999765:web:9c8d1fb504c1d4e102231c",
-    measurementId: "G-FBHD88ELVJ"
-  }
+      authDomain: "degula.firebaseapp.com",
+      projectId: "degula",
+      storageBucket: "degula.appspot.com",
+      messagingSenderId: "212031999765",
+      appId: "1:212031999765:web:9c8d1fb504c1d4e102231c",
+      measurementId: "G-FBHD88ELVJ"
+    }
     firebase.initializeApp(firebaseConfig);
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBosPQpuLiTxy2EYTLEYOphIprdW1Ji1bg"></script>
+  
   
   <script src="main.dart.js" type="application/javascript"></script>
 </body>

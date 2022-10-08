@@ -11,53 +11,44 @@ abstract class TempvalunteersRecord
   static Serializer<TempvalunteersRecord> get serializer =>
       _$tempvalunteersRecordSerializer;
 
-  @nullable
-  String get templename;
+  String? get templename;
 
-  @nullable
   @BuiltValueField(wireName: 'valunteer_name')
-  String get valunteerName;
+  String? get valunteerName;
 
-  @nullable
   @BuiltValueField(wireName: 'valunteer_uid')
-  String get valunteerUid;
+  String? get valunteerUid;
 
-  @nullable
   @BuiltValueField(wireName: 'valunteer_phone')
-  String get valunteerPhone;
+  String? get valunteerPhone;
 
-  @nullable
   @BuiltValueField(wireName: 'valunteer_email')
-  String get valunteerEmail;
+  String? get valunteerEmail;
 
-  @nullable
   @BuiltValueField(wireName: 'valunteer_reason')
-  String get valunteerReason;
+  String? get valunteerReason;
 
-  @nullable
   @BuiltValueField(wireName: 'valunteer_photo')
-  String get valunteerPhoto;
+  String? get valunteerPhoto;
 
-  @nullable
-  bool get isApproved;
+  bool? get isApproved;
 
-  @nullable
-  bool get isRejected;
+  bool? get isRejected;
 
-  @nullable
-  bool get isInPending;
+  bool? get isInPending;
 
-  @nullable
   @BuiltValueField(wireName: 'temple_ref')
-  DocumentReference get templeRef;
+  DocumentReference? get templeRef;
 
-  @nullable
   @BuiltValueField(wireName: 'temple_city')
-  String get templeCity;
+  String? get templeCity;
 
-  @nullable
+  @BuiltValueField(wireName: 'temp_img')
+  String? get tempImg;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(TempvalunteersRecordBuilder builder) => builder
     ..templename = ''
@@ -70,18 +61,19 @@ abstract class TempvalunteersRecord
     ..isApproved = false
     ..isRejected = false
     ..isInPending = false
-    ..templeCity = '';
+    ..templeCity = ''
+    ..tempImg = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('tempvalunteers');
 
   static Stream<TempvalunteersRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<TempvalunteersRecord> getDocumentOnce(DocumentReference ref) =>
       ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s)));
+          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   TempvalunteersRecord._();
   factory TempvalunteersRecord(
@@ -91,35 +83,43 @@ abstract class TempvalunteersRecord
   static TempvalunteersRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createTempvalunteersRecordData({
-  String templename,
-  String valunteerName,
-  String valunteerUid,
-  String valunteerPhone,
-  String valunteerEmail,
-  String valunteerReason,
-  String valunteerPhoto,
-  bool isApproved,
-  bool isRejected,
-  bool isInPending,
-  DocumentReference templeRef,
-  String templeCity,
-}) =>
-    serializers.toFirestore(
-        TempvalunteersRecord.serializer,
-        TempvalunteersRecord((t) => t
-          ..templename = templename
-          ..valunteerName = valunteerName
-          ..valunteerUid = valunteerUid
-          ..valunteerPhone = valunteerPhone
-          ..valunteerEmail = valunteerEmail
-          ..valunteerReason = valunteerReason
-          ..valunteerPhoto = valunteerPhoto
-          ..isApproved = isApproved
-          ..isRejected = isRejected
-          ..isInPending = isInPending
-          ..templeRef = templeRef
-          ..templeCity = templeCity));
+  String? templename,
+  String? valunteerName,
+  String? valunteerUid,
+  String? valunteerPhone,
+  String? valunteerEmail,
+  String? valunteerReason,
+  String? valunteerPhoto,
+  bool? isApproved,
+  bool? isRejected,
+  bool? isInPending,
+  DocumentReference? templeRef,
+  String? templeCity,
+  String? tempImg,
+}) {
+  final firestoreData = serializers.toFirestore(
+    TempvalunteersRecord.serializer,
+    TempvalunteersRecord(
+      (t) => t
+        ..templename = templename
+        ..valunteerName = valunteerName
+        ..valunteerUid = valunteerUid
+        ..valunteerPhone = valunteerPhone
+        ..valunteerEmail = valunteerEmail
+        ..valunteerReason = valunteerReason
+        ..valunteerPhoto = valunteerPhoto
+        ..isApproved = isApproved
+        ..isRejected = isRejected
+        ..isInPending = isInPending
+        ..templeRef = templeRef
+        ..templeCity = templeCity
+        ..tempImg = tempImg,
+    ),
+  );
+
+  return firestoreData;
+}
